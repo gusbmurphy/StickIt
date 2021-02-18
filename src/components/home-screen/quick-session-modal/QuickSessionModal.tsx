@@ -7,17 +7,35 @@ import {
   Pressable,
   View,
   ModalProps,
+  TouchableOpacityProps,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
-import appStyles from '../app-styles';
-import colors from '../colors';
+import {FocusArea} from '../../../focus-area';
+import appStyles from '../../app-styles';
+import colors from '../../colors';
+import StepIndicator from '../StepIndicator';
 
-const AreaButton = (props: {name: string}) => {
+const AreaButton = (props: {
+  name: string;
+  selected: boolean;
+  handlePress: () => void;
+}) => {
   return (
-    <TouchableOpacity onPress={() => console.log(`${props.name} pressed.`)}>
-      <View style={styles.areaButton}>
-        <Text style={styles.areaButtonText}>{props.name}</Text>
+    <TouchableOpacity onPress={() => props.handlePress()}>
+      <View
+        style={[
+          styles.areaButton,
+          props.selected
+            ? styles.areaButtonSelected
+            : styles.areaButtonUnselected,
+        ]}>
+        <Text
+          style={[
+            styles.areaButtonText,
+            props.selected ? styles.areaButtonTextSelected : null,
+          ]}>
+          {props.name}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,13 +45,28 @@ const NextButton = () => {
   return (
     <TouchableOpacity>
       <View style={appStyles.button}>
-        <Text>Next</Text>
+        <Text style={appStyles.buttonText}>Next</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-const QuickSessionModal = (props: ModalProps) => {
+const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
+  const [selectedAreaId, setSelectedAreaId] = useState('');
+
+  const areaButtons = props.areas.map((area, i) => (
+    <AreaButton
+      name={area.name}
+      key={i}
+      selected={selectedAreaId === area.id}
+      handlePress={() =>
+        selectedAreaId !== area.id
+          ? setSelectedAreaId(area.id)
+          : setSelectedAreaId('')
+      }
+    />
+  ));
+
   return (
     <Modal
       animationType="slide"
@@ -46,14 +79,10 @@ const QuickSessionModal = (props: ModalProps) => {
             <Text style={styles.headerText}>Quick Session</Text>
             <Text>What would you like to work on today?</Text>
           </View>
-          <View style={styles.areasView}>
-            <AreaButton name="Speed &amp; Agility" />
-            <AreaButton name="Creativity &amp; Improvisation" />
-            <AreaButton name="Style &amp; Vocabulary" />
-            <AreaButton name="Precision &amp; Timekeeping" />
-          </View>
+          <View style={styles.areasView}>{areaButtons}</View>
           <View>
             <NextButton />
+            <StepIndicator currentStep={2} totalSteps={5} />
           </View>
         </View>
       </View>
@@ -87,7 +116,6 @@ const styles = StyleSheet.create({
   },
   textView: {
     alignItems: 'center',
-    backgroundColor: 'red',
   },
   headerText: {
     fontSize: 24,
@@ -97,21 +125,28 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
   },
   areaButton: {
     margin: 10,
+    padding: 5,
     height: 130,
     width: 130,
-    // flex: 1,
-    backgroundColor: colors.secondary,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  areaButtonUnselected: {
+    backgroundColor: colors.secondary,
+  },
+  areaButtonSelected: {
+    backgroundColor: colors.primary,
+  },
   areaButtonText: {
     textAlign: 'center',
     textAlignVertical: 'center',
+  },
+  areaButtonTextSelected: {
+    color: 'white',
   },
 });
 
