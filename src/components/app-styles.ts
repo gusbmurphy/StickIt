@@ -8,6 +8,11 @@ const appStyles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
 export default appStyles;
