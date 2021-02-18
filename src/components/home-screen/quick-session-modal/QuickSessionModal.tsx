@@ -10,7 +10,7 @@ import {
   TouchableOpacityProps,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {FocusArea} from '../../../classes';
+import {FocusArea} from '../../../types/focus-area';
 import appStyles from '../../app-styles';
 import colors from '../../colors';
 import StepIndicator from '../StepIndicator';
