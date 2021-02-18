@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import QuickSessionButton from './QuickSessionButton';
 import QuickSessionModal from './quick-session-modal/QuickSessionModal';
-import {FocusArea} from '../../focus-area';
+import {FocusArea} from '../../classes';
 
 const areas = [
   new FocusArea('Speed & Agility'),
