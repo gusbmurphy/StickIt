@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
+import QuickSessionModal from './QuickSessionModal';
 
 describe('Quick Session Modal', () => {
   test.todo('at first shows buttons to select a focus area');
