@@ -4,14 +4,7 @@ import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import QuickSessionButton from './QuickSessionButton';
 import QuickSessionModal from './quick-session-modal/QuickSessionModal';
-import {FocusArea} from '../../types/focus-area';
-
-const areas = [
-  new FocusArea('Speed & Agility'),
-  new FocusArea('Creativity & Improvisation'),
-  new FocusArea('Style & Vocabulary'),
-  new FocusArea('Precision & Timekeeping'),
-];
+import areas from '../../util/default-areas';
 
 const HomeScreen = () => {
   const [quickSessionModalVisible, setQuickSessionModalVisible] = useState(
