@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   ModalProps,
-  TouchableOpacityProps,
+  TouchableOpacity,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FocusArea} from '../../../types/focus-area';
+import {areaButtonA11yLabel, nextButtonA11yLabel} from '../../accessibility';
 import appStyles from '../../app-styles';
 import colors from '../../colors';
 import StepIndicator from '../StepIndicator';
@@ -21,7 +19,9 @@ const AreaButton = (props: {
   handlePress: () => void;
 }) => {
   return (
-    <TouchableOpacity onPress={() => props.handlePress()}>
+    <TouchableOpacity
+      onPress={() => props.handlePress()}
+      accessibilityLabel={areaButtonA11yLabel(props.name)}>
       <View
         style={[
           styles.areaButton,
@@ -43,7 +43,7 @@ const AreaButton = (props: {
 
 const NextButton = () => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity accessibilityLabel={nextButtonA11yLabel}>
       <View style={appStyles.button}>
         <Text style={appStyles.buttonText}>Next</Text>
       </View>
