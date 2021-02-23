@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FocusArea} from '../../../types/focus-area';
-import {areaButtonA11yLabel, nextButtonA11yLabel} from '../../accessibility';
+import {areaButtonA11yLabel, nextButtonA11yLabel} from '../../labels';
 import appStyles from '../../app-styles';
 import colors from '../../colors';
 import StepIndicator from '../StepIndicator';
