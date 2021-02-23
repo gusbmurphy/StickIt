@@ -46,7 +46,7 @@
       "./jest.setup.js"
     ],
     "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
+      "./jest.setup-after-env.js"
     ],
     "moduleFileExtensions": [
       "ts",
