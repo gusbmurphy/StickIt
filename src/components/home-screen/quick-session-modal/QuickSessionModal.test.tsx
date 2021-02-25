@@ -9,6 +9,8 @@ import {
   generatedQuickSessionSummaryA11yLabel,
   stepIndicatorA11yLabel,
   stepIndicatorPipTestId,
+  areaButtonA11yLabel,
+  nextButtonA11yLabel,
 } from '../../labels';
 import colors from '../../colors';
 
@@ -23,7 +25,7 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
 
     const focusAreaButtons = areas.map((area) =>
-      getByA11yLabel(`Select ${area.name} focus area`),
+      getByA11yLabel(areaButtonA11yLabel(area.name)),
     );
 
     expect(focusAreaButtons).toHaveLength(areas.length);
@@ -33,43 +35,43 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
 
     const focusAreaButtons = areas.map((area) =>
-      getByA11yLabel(`Select ${area.name} focus area`),
+      getByA11yLabel(areaButtonA11yLabel(area.name)),
     );
 
     fireEvent.press(
       focusAreaButtons[randomIntFromInterval(0, focusAreaButtons.length - 1)],
     );
 
-    const nextButton = getByA11yLabel('Proceed to next choice');
+    const nextButton = getByA11yLabel(nextButtonA11yLabel);
     expect(nextButton).toBeTruthy();
   });
 
   test('the "Next" is not shown when an area isn\'t selected', () => {
     const {queryByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    expect(queryByA11yLabel('Proceed to next choice')).toBeFalsy();
+    expect(queryByA11yLabel(nextButtonA11yLabel)).toBeFalsy();
   });
 
   test('after pressing the next button, the focus are buttons go away, and buttons showing exercise groups are presented', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    const nextButton = getByA11yLabel('Proceed to next choice');
+    const nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const focusAreaButtons = areas.map((area) =>
-      getByA11yLabel(`Select ${area.name} focus area`),
+      getByA11yLabel(areaButtonA11yLabel(area.name)),
     );
 
     expect(focusAreaButtons.some((button) => button != null)).toBeFalsy();
 
     const exerciseGroupButtons = selectedFocusArea.exerciseGroups.map(
       (exerciseGroup) =>
-        getByA11yLabel(`Select ${exerciseGroup.name} exercise group`),
+        getByA11yLabel(exerciseGroupA11yLabel(exerciseGroup.name)),
     );
 
     expect(exerciseGroupButtons).toHaveLength(
@@ -81,12 +83,12 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const selectedExerciseGroup =
@@ -98,7 +100,7 @@ describe('Quick Session Modal', () => {
     );
 
     fireEvent.press(selectedExerciseGroupButton);
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     expect(nextButton).toBeTruthy();
   });
 
@@ -106,12 +108,12 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const selectedExerciseGroup =
@@ -123,7 +125,7 @@ describe('Quick Session Modal', () => {
     );
 
     fireEvent.press(selectedExerciseGroupButton);
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
 
     fireEvent.press(nextButton);
 
@@ -138,12 +140,12 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const selectedExerciseGroup =
@@ -155,7 +157,7 @@ describe('Quick Session Modal', () => {
     );
 
     fireEvent.press(selectedExerciseGroupButton);
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
 
     fireEvent.press(nextButton);
 
@@ -163,7 +165,7 @@ describe('Quick Session Modal', () => {
     const inputString = randomIntFromInterval(5, 30).toString();
     fireEvent.changeText(minuteInput, inputString);
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     expect(nextButton).toBeTruthy();
   });
 
@@ -171,12 +173,12 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const selectedExerciseGroup =
@@ -188,7 +190,7 @@ describe('Quick Session Modal', () => {
     );
 
     fireEvent.press(selectedExerciseGroupButton);
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
 
     fireEvent.press(nextButton);
 
@@ -196,7 +198,7 @@ describe('Quick Session Modal', () => {
     const inputString = randomIntFromInterval(1, 3).toString();
     fireEvent.changeText(hourInput, inputString);
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     expect(nextButton).toBeTruthy();
   });
 
@@ -204,12 +206,12 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const selectedExerciseGroup =
@@ -222,7 +224,7 @@ describe('Quick Session Modal', () => {
 
     fireEvent.press(selectedExerciseGroupButton);
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const minuteInput = getByA11yLabel(minuteInputA11yLabel);
@@ -232,7 +234,7 @@ describe('Quick Session Modal', () => {
     fireEvent.changeText(minuteInput, numOfMinutes.toString());
     fireEvent.changeText(hourInput, numOfHours.toString());
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     const generatedSessionSummary = getByA11yLabel(
@@ -247,7 +249,7 @@ describe('Quick Session Modal', () => {
     );
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
     const selectedFocusAreaButton = getByA11yLabel(
-      `Select ${selectedFocusArea.name} focus area`,
+      areaButtonA11yLabel(selectedFocusArea.name),
     );
 
     let stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(1, 4));
@@ -257,7 +259,7 @@ describe('Quick Session Modal', () => {
 
     fireEvent.press(selectedFocusAreaButton);
 
-    let nextButton = getByA11yLabel('Proceed to next choice');
+    let nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(2, 4));
@@ -275,7 +277,7 @@ describe('Quick Session Modal', () => {
 
     fireEvent.press(selectedExerciseGroupButton);
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(3, 4));
@@ -290,7 +292,7 @@ describe('Quick Session Modal', () => {
     fireEvent.changeText(minuteInput, numOfMinutes.toString());
     fireEvent.changeText(hourInput, numOfHours.toString());
 
-    nextButton = getByA11yLabel('Proceed to next choice');
+    nextButton = getByA11yLabel(nextButtonA11yLabel);
     fireEvent.press(nextButton);
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(4, 4));
