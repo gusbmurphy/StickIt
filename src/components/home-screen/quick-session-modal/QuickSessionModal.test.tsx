@@ -45,9 +45,8 @@ describe('Quick Session Modal', () => {
   });
 
   test('the "Next" is not shown when an area isn\'t selected', () => {
-    const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const nextButton = getByA11yLabel('Proceed to next choice');
-    expect(nextButton).toBeFalsy();
+    const {queryByA11yLabel} = render(<QuickSessionModal areas={areas} />);
+    expect(queryByA11yLabel('Proceed to next choice')).toBeFalsy();
   });
 
   test('after pressing the next button, the focus are buttons go away, and buttons showing exercise groups are presented', () => {
