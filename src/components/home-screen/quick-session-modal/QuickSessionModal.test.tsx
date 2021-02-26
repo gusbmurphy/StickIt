@@ -52,8 +52,10 @@ describe('Quick Session Modal', () => {
   });
 
   test('after pressing the next button, the focus are buttons go away, and buttons showing exercise groups are presented', () => {
-    const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const {getByA11yLabel, queryByA11yLabel} = render(
+      <QuickSessionModal areas={areas} />,
+    );
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -64,10 +66,10 @@ describe('Quick Session Modal', () => {
     fireEvent.press(nextButton);
 
     const focusAreaButtons = areas.map((area) =>
-      getByA11yLabel(areaButtonA11yLabel(area.name)),
+      queryByA11yLabel(areaButtonA11yLabel(area.name)),
     );
 
-    expect(focusAreaButtons.some((button) => button != null)).toBeFalsy();
+    focusAreaButtons.forEach((button) => expect(button).toBeFalsy());
 
     const exerciseGroupButtons = selectedFocusArea.exerciseGroups.map(
       (exerciseGroup) =>
@@ -81,7 +83,7 @@ describe('Quick Session Modal', () => {
 
   test('the "Next" button is displayed after choosing an exercise group', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -106,7 +108,7 @@ describe('Quick Session Modal', () => {
 
   test('after pressing the "Next" button, text inputs for hours and minutes are presented', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -138,7 +140,7 @@ describe('Quick Session Modal', () => {
 
   test('after inputing ONLY a number of minutes, the "Next" button is displayed', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -171,7 +173,7 @@ describe('Quick Session Modal', () => {
 
   test('after inputing ONLY a number of hours, the "Next" button is displayed', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -204,7 +206,7 @@ describe('Quick Session Modal', () => {
 
   test('a summary of the generated session is presented after the "Next" button is pressed', () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
@@ -247,7 +249,7 @@ describe('Quick Session Modal', () => {
     const {getByA11yLabel, getByTestId} = render(
       <QuickSessionModal areas={areas} />,
     );
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length)];
+    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
       areaButtonA11yLabel(selectedFocusArea.name),
     );
