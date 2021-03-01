@@ -10,7 +10,6 @@ const appStyles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
 });
