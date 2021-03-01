@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Modal,
   StyleSheet,
@@ -8,64 +8,150 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FocusArea} from '../../../types/focus-area';
-import {areaButtonA11yLabel, nextButtonA11yLabel} from '../../labels';
+import {
+  hourInputA11yLabel,
+  minuteInputA11yLabel,
+  nextButtonA11yLabel,
+} from '../../labels';
 import appStyles from '../../app-styles';
-import colors from '../../colors';
 import StepIndicator from '../StepIndicator';
+import {AreaButton} from './AreaButton';
+import {ExerciseGroupButton} from './ExerciseGroupButton';
+import {ExerciseGroup} from '../../../types';
+import IntegerInput from '../../util/IntegerInput';
 
-const AreaButton = (props: {
-  name: string;
-  selected: boolean;
-  handlePress: () => void;
-}) => {
-  return (
-    <TouchableOpacity
-      onPress={() => props.handlePress()}
-      accessibilityLabel={areaButtonA11yLabel(props.name)}>
-      <View
-        style={[
-          styles.areaButton,
-          props.selected
-            ? styles.areaButtonSelected
-            : styles.areaButtonUnselected,
-        ]}>
-        <Text
-          style={[
-            styles.areaButtonText,
-            props.selected ? styles.areaButtonTextSelected : null,
-          ]}>
-          {props.name}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const NextButton = () => {
-  return (
-    <TouchableOpacity accessibilityLabel={nextButtonA11yLabel}>
-      <View style={appStyles.button}>
-        <Text style={appStyles.buttonText}>Next</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+enum SessionSetupStep {
+  Area = 1,
+  Group = 2,
+  Time = 3,
+  Summary = 4,
+}
 
 const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
-  const [selectedAreaId, setSelectedAreaId] = useState('');
+  const [currentStep, setCurrentStep] = useState(SessionSetupStep.Area);
+  const [selectedArea, setSelectedArea] = useState<FocusArea | null>(null);
+  const exerciseGroups = useFocusAreaExerciseGroups(selectedArea);
+  const [
+    selectedExerciseGroup,
+    setSelectedExerciesGroup,
+  ] = useState<ExerciseGroup | null>(null);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [totalMinutes, setTotalMinutes] = useState(0);
+  const [selectionIsMade, setSelectionIsMade] = useState(false);
+
+  useEffect(() => {
+    switch (currentStep) {
+      case SessionSetupStep.Area:
+        setSelectionIsMade(selectedArea !== null);
+        break;
+      case SessionSetupStep.Group:
+        setSelectionIsMade(selectedExerciseGroup !== null);
+        break;
+      case SessionSetupStep.Time:
+        setSelectionIsMade(totalMinutes > 0);
+        break;
+    }
+  }, [selectedArea, selectedExerciseGroup, totalMinutes, currentStep]);
+
+  useEffect(() => {
+    setTotalMinutes(minutes + hours);
+  }, [minutes, hours]);
 
   const areaButtons = props.areas.map((area, i) => (
     <AreaButton
       name={area.name}
       key={i}
-      selected={selectedAreaId === area.id}
+      selected={selectedArea?.id === area.id}
       handlePress={() =>
-        selectedAreaId !== area.id
-          ? setSelectedAreaId(area.id)
-          : setSelectedAreaId('')
+        selectedArea?.id !== area.id
+          ? setSelectedArea(area)
+          : setSelectedArea(null)
       }
     />
   ));
+
+  const exerciseGroupButtons = exerciseGroups
+    ? exerciseGroups.map((group, i) => (
+        <ExerciseGroupButton
+          name={group.name}
+          key={i}
+          selected={selectedExerciseGroup?.id === group.id}
+          handlePress={() =>
+            selectedExerciseGroup?.id !== group.id
+              ? setSelectedExerciesGroup(group)
+              : setSelectedExerciesGroup(null)
+          }
+        />
+      ))
+    : null;
+
+  const TimeInputView = () => (
+    <View>
+      <View>
+        <IntegerInput
+          onChange={(v) => setMinutes(v)}
+          value={minutes}
+          accessibilityLabel={minuteInputA11yLabel}
+        />
+        <Text>min</Text>
+      </View>
+      <View>
+        <IntegerInput
+          onChange={(v) => setHours(v)}
+          value={hours}
+          accessibilityLabel={hourInputA11yLabel}
+        />
+        <Text>hr</Text>
+      </View>
+    </View>
+  );
+
+  const CurrentStepView = () => {
+    switch (currentStep) {
+      case SessionSetupStep.Area:
+        return <View style={styles.areasView}>{areaButtons}</View>;
+      case SessionSetupStep.Group:
+        return (
+          <View style={styles.exerciseGroupsView}>{exerciseGroupButtons}</View>
+        );
+      case SessionSetupStep.Time:
+        return <TimeInputView />;
+      default:
+        return <Text>Something else!</Text>;
+    }
+  };
+
+  const NextButton = () => {
+    return (
+      <TouchableOpacity
+        accessibilityLabel={nextButtonA11yLabel}
+        onPress={() => handleNextButtonPress()}>
+        <View style={appStyles.button}>
+          <Text style={[appStyles.buttonText, styles.nextButtonText]}>
+            Next
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  function handleNextButtonPress() {
+    switch (currentStep) {
+      case SessionSetupStep.Area:
+        setCurrentStep(SessionSetupStep.Group);
+        break;
+      case SessionSetupStep.Group:
+        setCurrentStep(SessionSetupStep.Time);
+        break;
+      case SessionSetupStep.Time:
+        setCurrentStep(SessionSetupStep.Summary);
+        break;
+      case SessionSetupStep.Summary:
+        console.log("Let's go!");
+        break;
+    }
+  }
 
   return (
     <Modal
@@ -79,16 +165,30 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
             <Text style={styles.headerText}>Quick Session</Text>
             <Text>What would you like to work on today?</Text>
           </View>
-          <View style={styles.areasView}>{areaButtons}</View>
+          <CurrentStepView />
           <View>
-            <NextButton />
-            <StepIndicator currentStep={2} totalSteps={5} />
+            {selectionIsMade && <NextButton />}
+            <StepIndicator currentStep={currentStep} totalSteps={4} />
           </View>
         </View>
       </View>
     </Modal>
   );
 };
+
+function useFocusAreaExerciseGroups(area: FocusArea | null) {
+  const [groups, setGroups] = useState<ExerciseGroup[] | null>();
+
+  useEffect(() => {
+    if (area) {
+      setGroups(area.exerciseGroups);
+    } else {
+      setGroups(null);
+    }
+  }, [area]);
+
+  return groups;
+}
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -126,27 +226,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  areaButton: {
-    margin: 10,
-    padding: 5,
-    height: 130,
-    width: 130,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  areaButtonUnselected: {
-    backgroundColor: colors.secondary,
-  },
-  areaButtonSelected: {
-    backgroundColor: colors.primary,
-  },
-  areaButtonText: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-  areaButtonTextSelected: {
-    color: 'white',
+  exerciseGroupsView: {},
+  nextButtonText: {
+    fontWeight: 'bold',
   },
 });
 
