@@ -245,6 +245,15 @@ describe('Quick Session Modal', () => {
     expect(generatedSessionSummary).toBeTruthy();
   });
 
+  test.todo('a number of exercises are presented after the time is set');
+  test.todo('on the final presentation, there is a "Start" button');
+  test.todo(
+    'each exercise has a "reroll" button next to it, when pressed it replaces the exercise',
+  );
+  test.todo(
+    'when an exercise is rerolled, all requirements previously set are still met',
+  );
+
   test('there are "progress pips" for each step, with a highlighted one representing the current step', () => {
     const {getByA11yLabel, getByTestId} = render(
       <QuickSessionModal areas={areas} />,
