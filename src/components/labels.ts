@@ -9,5 +9,5 @@ export const generatedQuickSessionSummaryA11yLabel = 'Generated quick session';
 export const stepIndicatorA11yLabel = (
   currentStep: number,
   totalSteps: number,
-) => `Currently on step ${currentStep} our of ${totalSteps}`;
+) => `Currently on step ${currentStep} out of ${totalSteps}`;
 export const stepIndicatorPipTestId = (step: number) => `indicator-pip-${step}`;
