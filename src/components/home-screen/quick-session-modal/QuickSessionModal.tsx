@@ -14,7 +14,7 @@ import {
   nextButtonA11yLabel,
 } from '../../labels';
 import appStyles from '../../app-styles';
-import StepIndicator from '../StepIndicator';
+import StepIndicator from './StepIndicator';
 import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';

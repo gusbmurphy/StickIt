@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import colors from '../colors';
-import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../labels';
+import colors from '../../colors';
+import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../../labels';
 
 const StepIndicator = (props: {currentStep: number; totalSteps: number}) => {
   let pips = [];
