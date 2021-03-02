@@ -18,8 +18,12 @@ const IntegerInput = (
       autoCorrect={false}
       keyboardType={'numeric'}
       onChangeText={(text) => {
-        text.replace(/[^0-9]/g, '');
-        onChange(parseInt(text, 10));
+        text = text.replace(/[^0-9]/g, '');
+        if (text) {
+          onChange(parseInt(text, 10));
+        } else {
+          onChange(0);
+        }
       }}
       style={[styles.input, propsStyle]}
       {...otherProps}
