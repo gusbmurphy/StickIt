@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import QuickSessionModal from './QuickSessionModal';
 import areas from '../../../util/default-areas';
 import {
@@ -204,7 +204,7 @@ describe('Quick Session Modal', () => {
     expect(nextButton).toBeTruthy();
   });
 
-  test('a summary of the generated session is presented after the "Next" button is pressed', () => {
+  test('a summary of the generated session is presented after the "Next" button is pressed', async () => {
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
     const selectedFocusAreaButton = getByA11yLabel(
@@ -230,10 +230,11 @@ describe('Quick Session Modal', () => {
     fireEvent.press(nextButton);
 
     const minuteInput = getByA11yLabel(minuteInputA11yLabel);
-    const hourInput = getByA11yLabel(hourInputA11yLabel);
     const numOfMinutes = randomIntFromInterval(5, 30);
-    const numOfHours = randomIntFromInterval(1, 3);
     fireEvent.changeText(minuteInput, numOfMinutes.toString());
+
+    const hourInput = getByA11yLabel(hourInputA11yLabel);
+    const numOfHours = randomIntFromInterval(1, 3);
     fireEvent.changeText(hourInput, numOfHours.toString());
 
     nextButton = getByA11yLabel(nextButtonA11yLabel);
@@ -268,7 +269,6 @@ describe('Quick Session Modal', () => {
     let firstStepPip = getByTestId(stepIndicatorPipTestId(1));
     expect(firstStepPip).toHaveStyle({backgroundColor: colors.primary});
 
-    // Select a Focus Area
     fireEvent.press(selectedFocusAreaButton);
 
     let nextButton = getByA11yLabel(nextButtonA11yLabel);
@@ -287,7 +287,6 @@ describe('Quick Session Modal', () => {
       exerciseGroupA11yLabel(selectedExerciseGroup.name),
     );
 
-    // Select an Exercise Group
     fireEvent.press(selectedExerciseGroupButton);
 
     nextButton = getByA11yLabel(nextButtonA11yLabel);
@@ -298,12 +297,12 @@ describe('Quick Session Modal', () => {
     let thirdStepPip = getByTestId(stepIndicatorPipTestId(3));
     expect(thirdStepPip).toHaveStyle({backgroundColor: colors.primary});
 
-    // Input numbers of hours and minutes
     const minuteInput = getByA11yLabel(minuteInputA11yLabel);
-    const hourInput = getByA11yLabel(hourInputA11yLabel);
     const numOfMinutes = randomIntFromInterval(5, 30);
-    const numOfHours = randomIntFromInterval(1, 3);
     fireEvent.changeText(minuteInput, numOfMinutes.toString());
+
+    const hourInput = getByA11yLabel(hourInputA11yLabel);
+    const numOfHours = randomIntFromInterval(1, 3);
     fireEvent.changeText(hourInput, numOfHours.toString());
 
     nextButton = getByA11yLabel(nextButtonA11yLabel);
