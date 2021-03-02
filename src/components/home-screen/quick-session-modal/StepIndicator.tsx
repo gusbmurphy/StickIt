@@ -3,7 +3,13 @@ import {View, StyleSheet} from 'react-native';
 import colors from '../../colors';
 import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../../labels';
 
-const StepIndicator = (props: {currentStep: number; totalSteps: number}) => {
+const StepIndicator = (
+  props: {currentStep: number; totalSteps: number} & React.ComponentProps<
+    typeof View
+  >,
+) => {
+  const {currentStep, totalSteps, ...otherProps} = props;
+
   let pips = [];
 
   for (let i = 1; i <= props.totalSteps; i++) {
@@ -14,11 +20,8 @@ const StepIndicator = (props: {currentStep: number; totalSteps: number}) => {
 
   return (
     <View
-      style={styles.pipView}
-      accessibilityLabel={stepIndicatorA11yLabel(
-        props.currentStep,
-        props.totalSteps,
-      )}>
+      style={[styles.pipView, otherProps.style]}
+      accessibilityLabel={stepIndicatorA11yLabel(currentStep, totalSteps)}>
       {pips}
     </View>
   );

@@ -170,7 +170,11 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
           <CurrentStepView />
           <View>
             {selectionIsMade && <NextButton />}
-            <StepIndicator currentStep={currentStep} totalSteps={4} />
+            <StepIndicator
+              currentStep={currentStep}
+              totalSteps={4}
+              style={styles.stepIndicator}
+            />
           </View>
         </View>
       </View>
@@ -205,7 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
+    alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
