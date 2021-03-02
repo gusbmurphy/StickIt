@@ -1,5 +1,6 @@
 import React from 'react';
-import {TextInput} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
+import colors from '../colors';
 
 const IntegerInput = (
   props: Omit<
@@ -10,10 +11,9 @@ const IntegerInput = (
     value: number;
   },
 ) => {
-  const {value, onChange, ...otherProps} = props;
+  const {value, onChange, style: propsStyle, ...otherProps} = props;
   return (
     <TextInput
-      {...otherProps}
       value={value.toString()}
       autoCorrect={false}
       keyboardType={'numeric'}
@@ -21,8 +21,19 @@ const IntegerInput = (
         text.replace(/[^0-9]/g, '');
         onChange(parseInt(text, 10));
       }}
+      style={[styles.input, propsStyle]}
+      {...otherProps}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    backgroundColor: colors.secondary,
+    padding: 5,
+    borderRadius: 5,
+    textAlign: 'center',
+  },
+});
 
 export default IntegerInput;
