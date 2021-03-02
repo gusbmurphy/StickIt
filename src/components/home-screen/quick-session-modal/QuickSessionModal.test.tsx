@@ -268,6 +268,7 @@ describe('Quick Session Modal', () => {
     let firstStepPip = getByTestId(stepIndicatorPipTestId(1));
     expect(firstStepPip).toHaveStyle({backgroundColor: colors.primary});
 
+    // Select a Focus Area
     fireEvent.press(selectedFocusAreaButton);
 
     let nextButton = getByA11yLabel(nextButtonA11yLabel);
@@ -286,6 +287,7 @@ describe('Quick Session Modal', () => {
       exerciseGroupA11yLabel(selectedExerciseGroup.name),
     );
 
+    // Select an Exercise Group
     fireEvent.press(selectedExerciseGroupButton);
 
     nextButton = getByA11yLabel(nextButtonA11yLabel);
@@ -296,6 +298,7 @@ describe('Quick Session Modal', () => {
     let thirdStepPip = getByTestId(stepIndicatorPipTestId(3));
     expect(thirdStepPip).toHaveStyle({backgroundColor: colors.primary});
 
+    // Input numbers of hours and minutes
     const minuteInput = getByA11yLabel(minuteInputA11yLabel);
     const hourInput = getByA11yLabel(hourInputA11yLabel);
     const numOfMinutes = randomIntFromInterval(5, 30);
