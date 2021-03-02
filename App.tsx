@@ -3,7 +3,7 @@ import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './src/components/home-screen/HomeScreen';
+import HomeScreen from './src/components/home-screen';
 
 const Stack = createStackNavigator();
 
