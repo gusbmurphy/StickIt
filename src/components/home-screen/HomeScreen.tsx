@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import QuickSessionButton from './QuickSessionButton';
-import QuickSessionModal from './quick-session-modal/QuickSessionModal';
+import QuickSessionModal from './quick-session-modal';
 import areas from '../../util/default-areas';
 
 const HomeScreen = () => {

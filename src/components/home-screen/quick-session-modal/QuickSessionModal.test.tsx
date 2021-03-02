@@ -1,6 +1,6 @@
 import React from 'react';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
-import QuickSessionModal from './QuickSessionModal';
+import {fireEvent, render} from '@testing-library/react-native';
+import QuickSessionModal from '.';
 import areas from '../../../util/default-areas';
 import {
   exerciseGroupA11yLabel,
