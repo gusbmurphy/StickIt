@@ -87,22 +87,24 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
     : null;
 
   const TimeInputView = () => (
-    <View>
-      <View>
+    <View style={styles.timeInputsView}>
+      <View style={styles.individualTimeInputView}>
         <IntegerInput
           onChange={(v) => setMinutes(v)}
           value={minutes}
           accessibilityLabel={minuteInputA11yLabel}
+          style={styles.timeInput}
         />
-        <Text>min</Text>
+        <Text style={styles.timeInputText}>min</Text>
       </View>
-      <View>
+      <View style={styles.individualTimeInputView}>
         <IntegerInput
           onChange={(v) => setHours(v)}
           value={hours}
           accessibilityLabel={hourInputA11yLabel}
+          style={styles.timeInput}
         />
-        <Text>hr</Text>
+        <Text style={styles.timeInputText}>hr</Text>
       </View>
     </View>
   );
@@ -229,6 +231,25 @@ const styles = StyleSheet.create({
   exerciseGroupsView: {},
   nextButtonText: {
     fontWeight: 'bold',
+  },
+  timeInput: {
+    fontSize: 18,
+  },
+  timeInputsView: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  individualTimeInputView: {
+    marginVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  timeInputText: {
+    marginLeft: 10,
+    fontSize: 18,
+  },
+  stepIndicator: {
+    alignSelf: 'center',
   },
 });
 
