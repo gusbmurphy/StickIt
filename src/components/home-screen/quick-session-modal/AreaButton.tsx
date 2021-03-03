@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../../colors';
-import {areaButtonA11yLabel} from '../../labels';
 import appStyles from '../../app-styles';
 
 export const AreaButton = (props: {
@@ -57,3 +56,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export const areaButtonA11yLabel = (areaName: string) =>
+  `Select ${areaName} focus area`;

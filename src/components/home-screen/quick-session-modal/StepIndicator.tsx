@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import colors from '../../colors';
-import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../../labels';
 
 const StepIndicator = (
   props: {currentStep: number; totalSteps: number} & React.ComponentProps<
@@ -55,5 +54,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
+
+export const stepIndicatorA11yLabel = (
+  currentStep: number,
+  totalSteps: number,
+) => `Currently on step ${currentStep} out of ${totalSteps}`;
+
+export const stepIndicatorPipTestId = (step: number) => `indicator-pip-${step}`;
 
 export default StepIndicator;

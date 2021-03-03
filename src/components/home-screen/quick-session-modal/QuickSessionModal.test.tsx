@@ -1,29 +1,22 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-  RenderAPI,
-  within,
-} from '@testing-library/react-native';
-import QuickSessionModal, {SessionSetupStep} from '.';
-import areas from '../../../util/default-areas';
-import {
-  exerciseGroupA11yLabel,
+import {fireEvent, render, within} from '@testing-library/react-native';
+import QuickSessionModal, {
+  exerciseRerollButtonTestId,
+  generatedQuickSessionSummaryA11yLabel,
   hourInputA11yLabel,
   minuteInputA11yLabel,
-  generatedQuickSessionSummaryA11yLabel,
-  stepIndicatorA11yLabel,
-  stepIndicatorPipTestId,
-  areaButtonA11yLabel,
   nextButtonA11yLabel,
-  quickSessionSummaryExerciseTestId,
-  quickSessionStartButtonA11yLabel,
-  quickSessionSummaryTotalTimeA11yLabel,
-  quickSessionSummaryRerollButtonA11yLabel,
-  quickSessionSummaryRerollButtonTestId,
-} from '../../labels';
+  SessionSetupStep,
+  startButtonA11yLabel,
+  summaryExerciseTestId,
+  summaryTotalTimeA11yLabel,
+} from '.';
+import areas from '../../../util/default-areas';
 import colors from '../../colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
+import {areaButtonA11yLabel} from './AreaButton';
+import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
+import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from './StepIndicator';
 
 /* Thanks to StackOverflow user jonschlinkert: https://stackoverflow.com/a/7228322/6741328, no way I could've come up with this. */
 function randomIntFromInterval(min: number, max: number) {
@@ -216,7 +209,7 @@ describe('Quick Session Modal', () => {
 
     const exercises = within(
       getByA11yLabel(generatedQuickSessionSummaryA11yLabel),
-    ).getAllByTestId(quickSessionSummaryExerciseTestId);
+    ).getAllByTestId(summaryExerciseTestId);
     expect(exercises.length).toBeGreaterThanOrEqual(1);
   });
 
@@ -225,7 +218,7 @@ describe('Quick Session Modal', () => {
       SessionSetupStep.Summary,
     );
 
-    expect(getByA11yLabel(quickSessionStartButtonA11yLabel)).toBeTruthy();
+    expect(getByA11yLabel(startButtonA11yLabel)).toBeTruthy();
   });
 
   test('the quick session summary displays the total amount of time for the session', () => {
@@ -237,10 +230,7 @@ describe('Quick Session Modal', () => {
 
     expect(
       getByA11yLabel(
-        quickSessionSummaryTotalTimeA11yLabel(
-          selectedMinuteValue,
-          selectedHourValue,
-        ),
+        summaryTotalTimeA11yLabel(selectedMinuteValue, selectedHourValue),
       ),
     ).toBeTruthy();
   });
@@ -250,11 +240,11 @@ describe('Quick Session Modal', () => {
       SessionSetupStep.Summary,
     );
 
-    const exercises = getAllByTestId(quickSessionSummaryExerciseTestId);
+    const exercises = getAllByTestId(summaryExerciseTestId);
 
     exercises.forEach((exercise) => {
       expect(
-        within(exercise).getByTestId(quickSessionSummaryRerollButtonTestId),
+        within(exercise).getByTestId(exerciseRerollButtonTestId),
       ).toBeTruthy();
     });
   });

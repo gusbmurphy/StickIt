@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../../colors';
-import {exerciseGroupA11yLabel} from '../../labels';
 import appStyles from '../../app-styles';
 
 export const ExerciseGroupButton = (props: {
@@ -54,3 +53,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export const exerciseGroupA11yLabel = (groupName: string) =>
+  `Select ${groupName} exercise group`;
