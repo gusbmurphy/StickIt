@@ -1,5 +1,10 @@
 import React from 'react';
-import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  RenderAPI,
+  within,
+} from '@testing-library/react-native';
 import QuickSessionModal, {SessionSetupStep} from '.';
 import areas from '../../../util/default-areas';
 import {
@@ -11,6 +16,11 @@ import {
   stepIndicatorPipTestId,
   areaButtonA11yLabel,
   nextButtonA11yLabel,
+  quickSessionSummaryExerciseTestId,
+  quickSessionStartButtonA11yLabel,
+  quickSessionSummaryTotalTimeA11yLabel,
+  quickSessionSummaryRerollButtonA11yLabel,
+  quickSessionSummaryRerollButtonTestId,
 } from '../../labels';
 import colors from '../../colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
@@ -199,13 +209,56 @@ describe('Quick Session Modal', () => {
     expect(generatedSessionSummary).toBeTruthy();
   });
 
-  test.todo(
-    'a number of exercises are presented after the time is set in the summary',
-  );
-  test.todo('on the final presentation, there is a "Start" button');
-  test.todo(
-    'each exercise in the summary has a "reroll" button next to it, when pressed it replaces the exercise',
-  );
+  test('a number of exercises are presented after the time is set in the summary', () => {
+    const {getByA11yLabel} = renderAndCompleteUntilStep(
+      SessionSetupStep.Summary,
+    );
+
+    const exercises = within(
+      getByA11yLabel(generatedQuickSessionSummaryA11yLabel),
+    ).getAllByTestId(quickSessionSummaryExerciseTestId);
+    expect(exercises.length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('on the final presentation, there is a "Start" button', () => {
+    const {getByA11yLabel} = renderAndCompleteUntilStep(
+      SessionSetupStep.Summary,
+    );
+
+    expect(getByA11yLabel(quickSessionStartButtonA11yLabel)).toBeTruthy();
+  });
+
+  test('the quick session summary displays the total amount of time for the session', () => {
+    const {
+      getByA11yLabel,
+      selectedMinuteValue,
+      selectedHourValue,
+    } = renderAndCompleteUntilStep(SessionSetupStep.Summary);
+
+    expect(
+      getByA11yLabel(
+        quickSessionSummaryTotalTimeA11yLabel(
+          selectedMinuteValue,
+          selectedHourValue,
+        ),
+      ),
+    ).toBeTruthy();
+  });
+
+  test('each exercise in the summary has a "reroll" button next to it, when pressed it replaces the exercise', () => {
+    const {getAllByTestId} = renderAndCompleteUntilStep(
+      SessionSetupStep.Summary,
+    );
+
+    const exercises = getAllByTestId(quickSessionSummaryExerciseTestId);
+
+    exercises.forEach((exercise) => {
+      expect(
+        within(exercise).getByTestId(quickSessionSummaryRerollButtonTestId),
+      ).toBeTruthy();
+    });
+  });
+
   test.todo(
     'when an exercise is rerolled, all requirements previously set are still met',
   );
