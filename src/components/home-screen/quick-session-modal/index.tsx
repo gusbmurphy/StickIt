@@ -20,7 +20,7 @@ import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import IntegerInput from '../../util/IntegerInput';
 
-enum SessionSetupStep {
+export enum SessionSetupStep {
   Area = 1,
   Group = 2,
   Time = 3,
