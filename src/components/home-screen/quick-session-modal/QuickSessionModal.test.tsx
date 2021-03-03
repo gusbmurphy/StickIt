@@ -211,12 +211,8 @@ describe('Quick Session Modal', () => {
   );
 
   test('there are "progress pips" for each step, with a highlighted one representing the current step', () => {
-    const {getByA11yLabel, getByTestId} = render(
-      <QuickSessionModal areas={areas} />,
-    );
-    const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
-    const selectedFocusAreaButton = getByA11yLabel(
-      areaButtonA11yLabel(selectedFocusArea.name),
+    let {getByA11yLabel, getByTestId} = renderAndCompleteUntilStep(
+      SessionSetupStep.Area,
     );
 
     let stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(1, 4));
@@ -224,44 +220,27 @@ describe('Quick Session Modal', () => {
     let firstStepPip = getByTestId(stepIndicatorPipTestId(1));
     expect(firstStepPip).toHaveStyle({backgroundColor: colors.primary});
 
-    fireEvent.press(selectedFocusAreaButton);
-
-    let nextButton = getByA11yLabel(nextButtonA11yLabel);
-    fireEvent.press(nextButton);
+    ({getByA11yLabel, getByTestId} = renderAndCompleteUntilStep(
+      SessionSetupStep.Group,
+    ));
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(2, 4));
     expect(stepIndicator).toBeTruthy();
     let secondStepPip = getByTestId(stepIndicatorPipTestId(2));
     expect(secondStepPip).toHaveStyle({backgroundColor: colors.primary});
 
-    const selectedExerciseGroup =
-      selectedFocusArea.exerciseGroups[
-        randomIntFromInterval(0, selectedFocusArea.exerciseGroups.length - 1)
-      ];
-    const selectedExerciseGroupButton = getByA11yLabel(
-      exerciseGroupA11yLabel(selectedExerciseGroup.name),
-    );
-
-    fireEvent.press(selectedExerciseGroupButton);
-
-    nextButton = getByA11yLabel(nextButtonA11yLabel);
-    fireEvent.press(nextButton);
+    ({getByA11yLabel, getByTestId} = renderAndCompleteUntilStep(
+      SessionSetupStep.Time,
+    ));
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(3, 4));
     expect(stepIndicator).toBeTruthy();
     let thirdStepPip = getByTestId(stepIndicatorPipTestId(3));
     expect(thirdStepPip).toHaveStyle({backgroundColor: colors.primary});
 
-    const minuteInput = getByA11yLabel(minuteInputA11yLabel);
-    const numOfMinutes = randomIntFromInterval(5, 30);
-    fireEvent.changeText(minuteInput, numOfMinutes.toString());
-
-    const hourInput = getByA11yLabel(hourInputA11yLabel);
-    const numOfHours = randomIntFromInterval(1, 3);
-    fireEvent.changeText(hourInput, numOfHours.toString());
-
-    nextButton = getByA11yLabel(nextButtonA11yLabel);
-    fireEvent.press(nextButton);
+    ({getByA11yLabel, getByTestId} = renderAndCompleteUntilStep(
+      SessionSetupStep.Summary,
+    ));
 
     stepIndicator = getByA11yLabel(stepIndicatorA11yLabel(4, 4));
     expect(stepIndicator).toBeTruthy();
