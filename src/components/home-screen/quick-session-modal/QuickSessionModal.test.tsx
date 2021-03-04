@@ -221,38 +221,6 @@ describe('Quick Session Modal', () => {
     expect(getByA11yLabel(startButtonA11yLabel)).toBeTruthy();
   });
 
-  test('the quick session summary displays the total amount of time for the session', () => {
-    const {
-      getByA11yLabel,
-      selectedMinuteValue,
-      selectedHourValue,
-    } = renderAndCompleteUntilStep(SessionSetupStep.Summary);
-
-    expect(
-      getByA11yLabel(
-        summaryTotalTimeA11yLabel(selectedMinuteValue, selectedHourValue),
-      ),
-    ).toBeTruthy();
-  });
-
-  test('each exercise in the summary has a "reroll" button next to it, when pressed it replaces the exercise', () => {
-    const {getAllByTestId} = renderAndCompleteUntilStep(
-      SessionSetupStep.Summary,
-    );
-
-    const exercises = getAllByTestId(summaryExerciseTestId);
-
-    exercises.forEach((exercise) => {
-      expect(
-        within(exercise).getByTestId(exerciseRerollButtonTestId),
-      ).toBeTruthy();
-    });
-  });
-
-  test.todo(
-    'when an exercise is rerolled, all requirements previously set are still met',
-  );
-
   test('there are "progress pips" for each step, with a highlighted one representing the current step', () => {
     let {getByA11yLabel, getByTestId} = renderAndCompleteUntilStep(
       SessionSetupStep.Area,
