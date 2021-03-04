@@ -14,6 +14,7 @@ import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import IntegerInput from '../../util/IntegerInput';
+import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -114,8 +115,8 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
         );
       case SessionSetupStep.Time:
         return <TimeInputView />;
-      default:
-        return <Text>Something else!</Text>;
+      case SessionSetupStep.Summary:
+        return <GeneratedSessionSummaryView />;
     }
   };
 
@@ -252,8 +253,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export const summaryExerciseTestId = 'exercise';
-
 export const startButtonA11yLabel = 'Begin quick session';
 
 export const summaryTotalTimeA11yLabel = (
@@ -282,13 +281,5 @@ export const exerciseRerollButtonTestId = 'reroll-button';
 export const nextButtonA11yLabel = 'Proceed to next choice';
 export const minuteInputA11yLabel = 'Enter number of minutes for session';
 export const hourInputA11yLabel = 'Enter number of hours for session';
-export const generatedQuickSessionSummaryA11yLabel =
-  'Summary of generated quick session';
-
-export const quickSessionSummaryExerciseA11yLabel = (
-  groupName: string,
-  exerciseName: string,
-  duration: number,
-) => `${exerciseName} from ${groupName} for ${duration} minutes`;
 
 export default QuickSessionModal;

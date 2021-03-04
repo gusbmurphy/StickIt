@@ -2,13 +2,11 @@ import React from 'react';
 import {fireEvent, render, within} from '@testing-library/react-native';
 import QuickSessionModal, {
   exerciseRerollButtonTestId,
-  generatedQuickSessionSummaryA11yLabel,
   hourInputA11yLabel,
   minuteInputA11yLabel,
   nextButtonA11yLabel,
   SessionSetupStep,
   startButtonA11yLabel,
-  summaryExerciseTestId,
   summaryTotalTimeA11yLabel,
 } from '.';
 import areas from '../../../util/default-areas';
@@ -17,6 +15,8 @@ import {ExerciseGroup, FocusArea} from '../../../types';
 import {areaButtonA11yLabel} from './AreaButton';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
 import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from './StepIndicator';
+import {summaryExerciseTestId} from './labels';
+import {generatedQuickSessionSummaryA11yLabel} from './GeneratedSessionSummaryView';
 
 /* Thanks to StackOverflow user jonschlinkert: https://stackoverflow.com/a/7228322/6741328, no way I could've come up with this. */
 function randomIntFromInterval(min: number, max: number) {
