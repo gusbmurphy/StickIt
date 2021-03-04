@@ -1,13 +1,11 @@
 import React from 'react';
 import {fireEvent, render, within} from '@testing-library/react-native';
 import QuickSessionModal, {
-  exerciseRerollButtonTestId,
   hourInputA11yLabel,
   minuteInputA11yLabel,
   nextButtonA11yLabel,
   SessionSetupStep,
   startButtonA11yLabel,
-  summaryTotalTimeA11yLabel,
 } from '.';
 import areas from '../../../util/default-areas';
 import colors from '../../colors';
