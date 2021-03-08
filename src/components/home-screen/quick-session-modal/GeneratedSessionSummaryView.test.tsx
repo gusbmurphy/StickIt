@@ -144,12 +144,12 @@ describe('Quick Session Summary Exercise View', () => {
 
     expect(queryByText(exerciseName)).toBeTruthy();
     expect(queryByText(groupName)).toBeTruthy();
-    expect(
-      within(getByTestId(summaryExerciseDurationTestId)).findByText(
-        numberOfMinutes.toString(),
-      ),
-    ).toBeTruthy();
+
+    const durationComponent = getByTestId(summaryExerciseDurationTestId);
+    expect(durationComponent).toBeTruthy();
+    expect(durationComponent).toHaveTextContent(numberOfMinutes.toString());
   });
+
   test.todo(
     'there is an information button, that when pressed brings up an Exercise Descripion Modal',
   );
