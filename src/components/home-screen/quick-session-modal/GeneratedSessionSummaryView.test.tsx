@@ -1,6 +1,4 @@
-import {render, within} from '@testing-library/react-native';
 import React from 'react';
-import {Exercise} from '../../../types';
 import {fireEvent, render, within} from '@testing-library/react-native';
 import {Exercise, ExerciseGroup} from '../../../types';
 import {
