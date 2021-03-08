@@ -1,11 +1,41 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {Exercise} from '../../../types';
+import {Exercise, ExerciseGroup} from '../../../types';
+import {QuickSession} from '../../../types/quick-session';
 
-export const GeneratedSessionSummaryView = () => {
+export const GeneratedSessionSummaryView = (props: {
+  session: QuickSession;
+  exerciseGroups: ExerciseGroup[];
+}) => {
+  let totalDuration = 0;
+
+  const exercises = props.session.exercises.map((exercise, i) => {
+    const duration = props.session.exerciseDurations.find(
+      (d) => d.exerciseId === exercise.id,
+    )!.duration;
+
+    totalDuration += duration;
+
+    return (
+      <SummaryExerciseView
+        exercise={exercise}
+        groupName={
+          props.exerciseGroups.find(
+            (group) => group.id === exercise.parentGroupId,
+          )!.name
+        }
+        numberOfMinutes={duration}
+        key={i}
+      />
+    );
+  });
+
   return (
     <View accessibilityLabel={generatedQuickSessionSummaryA11yLabel}>
-      <Text>Hello!</Text>
+      {exercises}
+      <Text accessibilityLabel={summaryTotalTimeA11yLabel(totalDuration)}>
+        {totalDuration}
+      </Text>
     </View>
   );
 };
@@ -22,12 +52,18 @@ export const SummaryExerciseView = (props: {
       props.exercise.name,
       props.numberOfMinutes,
     )}>
-    <Text>SummaryExerciseView</Text>
+    <Text>{props.exercise.name}</Text>
+    <Text>{props.groupName}</Text>
+    <Text testID={summaryExerciseDurationTestId}>{props.numberOfMinutes}</Text>
   </View>
 );
 
 export const generatedQuickSessionSummaryA11yLabel =
   'Summary of generated quick session';
+export const sessionTotalDurationTestId = 'total-duration';
+export const exerciseRerollButtonA11yLabel = (exerciseName: string) =>
+  `Replace ${exerciseName}`;
+
 export const summaryTotalTimeA11yLabel = (
   minutes?: number,
   hours?: number,
