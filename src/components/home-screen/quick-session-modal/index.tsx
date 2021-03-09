@@ -172,6 +172,21 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
     }
   }
 
+  const CurrentPrompt = () => {
+    if (currentStep === SessionSetupStep.Summary) {
+      return null;
+    }
+
+    let text: string;
+    if (currentStep === SessionSetupStep.Group) {
+      text = StepPrompts[SessionSetupStep.Group](selectedArea!.name);
+    } else {
+      text = StepPrompts[currentStep];
+    }
+
+    return <Text testID={stepPromptTestId}>{text}</Text>;
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -182,7 +197,7 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
         <View style={styles.modalView}>
           <View style={styles.textView}>
             <Text style={styles.headerText}>Quick Session</Text>
-            <Text>What would you like to work on today?</Text>
+            <CurrentPrompt />
           </View>
           <CurrentStepView />
           <View>
