@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {Exercise, ExerciseGroup} from '../../../types';
+import {ExerciseGroup} from '../../../types';
 import {QuickSession} from '../../../types/quick-session';
+import { SummaryExerciseView } from './SummaryExerciseView';
 
 export const GeneratedSessionSummaryView = (props: {
   session: QuickSession;
@@ -45,24 +46,6 @@ export const GeneratedSessionSummaryView = (props: {
     </View>
   );
 };
-
-export const SummaryExerciseView = (props: {
-  exercise: Exercise;
-  groupName: string;
-  numberOfMinutes: number;
-}) => (
-  <View
-    testID={summaryExerciseTestId}
-    accessibilityLabel={quickSessionSummaryExerciseA11yLabel(
-      props.groupName,
-      props.exercise.name,
-      props.numberOfMinutes,
-    )}>
-    <Text>{props.exercise.name}</Text>
-    <Text>{props.groupName}</Text>
-    <Text testID={summaryExerciseDurationTestId}>{props.numberOfMinutes}</Text>
-  </View>
-);
 
 export const generatedQuickSessionSummaryA11yLabel =
   'Summary of generated quick session';

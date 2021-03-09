@@ -7,9 +7,9 @@ import {
   quickSessionSummaryExerciseA11yLabel,
   summaryExerciseDurationTestId,
   summaryExerciseTestId,
-  SummaryExerciseView,
   summaryTotalTimeA11yLabel,
 } from './GeneratedSessionSummaryView';
+import {SummaryExerciseView} from './SummaryExerciseView';
 import {QuickSession} from '../../../types/quick-session';
 
 const testExercises = [
