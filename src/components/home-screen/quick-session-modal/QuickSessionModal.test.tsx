@@ -6,6 +6,8 @@ import QuickSessionModal, {
   nextButtonA11yLabel,
   SessionSetupStep,
   startButtonA11yLabel,
+  StepPrompts,
+  stepPromptTestId,
 } from '.';
 import {generateFocusAreas} from '../../../util/generate-data';
 import colors from '../../colors';
@@ -254,5 +256,52 @@ describe('Quick Session Modal', () => {
     expect(stepIndicator).toBeTruthy();
     let fourthStepPip = getByTestId(stepIndicatorPipTestId(4));
     expect(fourthStepPip).toHaveStyle({backgroundColor: colors.primary});
+  });
+
+  test('there is a prompt on each screen describing the choice being made (except for the summary step)', () => {
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Area).queryByTestId(
+        stepPromptTestId,
+      ),
+    ).toBeTruthy();
+
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Group).queryByTestId(
+        stepPromptTestId,
+      ),
+    ).toBeTruthy();
+
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Time).queryByTestId(
+        stepPromptTestId,
+      ),
+    ).toBeTruthy();
+
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Summary).queryByTestId(
+        stepPromptTestId,
+      ),
+    ).toBeTruthy();
+  });
+
+  test('the prompt correctly describes each step (except for the summary step)', () => {
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Area).queryByText(
+        StepPrompts[SessionSetupStep.Area],
+      ),
+    ).toBeTruthy();
+
+    const {queryByText, selectedFocusArea} = renderAndCompleteUntilStep(
+      SessionSetupStep.Group,
+    );
+    expect(
+      queryByText(StepPrompts[SessionSetupStep.Group](selectedFocusArea!.name)),
+    ).toBeTruthy();
+
+    expect(
+      renderAndCompleteUntilStep(SessionSetupStep.Time).queryByText(
+        StepPrompts[SessionSetupStep.Time],
+      ),
+    ).toBeTruthy();
   });
 });
