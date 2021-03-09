@@ -25,6 +25,13 @@ export enum SessionSetupStep {
   Summary = 4,
 }
 
+export const StepPrompts = {
+  [SessionSetupStep.Area]: 'What would you like to work on today?',
+  [SessionSetupStep.Group]: (areaName: string) =>
+    `"${areaName}" it is. Any exercise groups in particular?`,
+  [SessionSetupStep.Time]: 'How much time do you have?',
+};
+
 const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
   const [currentStep, setCurrentStep] = useState(SessionSetupStep.Area);
   const [selectedArea, setSelectedArea] = useState<FocusArea | null>(null);
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
 });
 
 export const startButtonA11yLabel = 'Begin quick session';
-
+export const stepPromptTestId = 'step-prompt';
 export const exerciseRerollButtonTestId = 'reroll-button';
 export const nextButtonA11yLabel = 'Proceed to next choice';
 export const minuteInputA11yLabel = 'Enter number of minutes for session';
