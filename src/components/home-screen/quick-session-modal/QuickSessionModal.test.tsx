@@ -281,7 +281,7 @@ describe('Quick Session Modal', () => {
       renderAndCompleteUntilStep(SessionSetupStep.Summary).queryByTestId(
         stepPromptTestId,
       ),
-    ).toBeTruthy();
+    ).toBeFalsy();
   });
 
   test('the prompt correctly describes each step (except for the summary step)', () => {
