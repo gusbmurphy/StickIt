@@ -1,11 +1,10 @@
 import React from 'react';
-import {fireEvent, render, within} from '@testing-library/react-native';
+import {fireEvent, render} from '@testing-library/react-native';
 import {Exercise, ExerciseGroup} from '../../../types';
 import {
   exerciseRerollButtonA11yLabel,
   GeneratedSessionSummaryView,
   quickSessionSummaryExerciseA11yLabel,
-  sessionTotalDurationTestId,
   summaryExerciseDurationTestId,
   summaryExerciseTestId,
   SummaryExerciseView,
