@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {StyleSheet} from 'react-native';
 import QuickSessionButton from './QuickSessionButton';
 import QuickSessionModal from './quick-session-modal';
-import areas from '../../util/default-areas';
+import {generateFocusAreas} from '../../util/generate-data';
 
 const HomeScreen = () => {
   const [quickSessionModalVisible, setQuickSessionModalVisible] = useState(
@@ -13,7 +13,10 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <QuickSessionModal visible={quickSessionModalVisible} areas={areas} />
+      <QuickSessionModal
+        visible={quickSessionModalVisible}
+        areas={generateFocusAreas(4)}
+      />
       <QuickSessionButton onPress={() => setQuickSessionModalVisible(true)} />
     </View>
   );

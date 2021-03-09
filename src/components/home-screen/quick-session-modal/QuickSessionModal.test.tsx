@@ -7,7 +7,7 @@ import QuickSessionModal, {
   SessionSetupStep,
   startButtonA11yLabel,
 } from '.';
-import areas from '../../../util/default-areas';
+import {generateFocusAreas} from '../../../util/generate-data';
 import colors from '../../colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
 import {areaButtonA11yLabel} from './AreaButton';
@@ -28,6 +28,7 @@ interface RenderAndCompleteUntilStepReturnObject
 function renderAndCompleteUntilStep(
   stopStep: SessionSetupStep,
 ): RenderAndCompleteUntilStepReturnObject {
+  const areas = generateFocusAreas(randomIntFromInterval(3, 6));
   const helpers = render(<QuickSessionModal areas={areas} />);
   let returnObject: RenderAndCompleteUntilStepReturnObject = {...helpers};
   const {getByA11yLabel} = helpers;
@@ -83,6 +84,7 @@ function renderAndCompleteUntilStep(
 
 describe('Quick Session Modal', () => {
   test('at first shows buttons to select a focus area for each area', () => {
+    const areas = generateFocusAreas(randomIntFromInterval(3, 6));
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
 
     const focusAreaButtons = areas.map((area) =>
@@ -93,6 +95,7 @@ describe('Quick Session Modal', () => {
   });
 
   test('after selecting one, a "Next" button is revealed', () => {
+    const areas = generateFocusAreas(randomIntFromInterval(3, 6));
     const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
 
     const focusAreaButtons = areas.map((area) =>
@@ -108,6 +111,7 @@ describe('Quick Session Modal', () => {
   });
 
   test('the "Next" is not shown when an area isn\'t selected', () => {
+    const areas = generateFocusAreas(randomIntFromInterval(3, 6));
     const {queryByA11yLabel} = render(<QuickSessionModal areas={areas} />);
     expect(queryByA11yLabel(nextButtonA11yLabel)).toBeFalsy();
   });
@@ -118,7 +122,7 @@ describe('Quick Session Modal', () => {
       getByA11yLabel,
       selectedFocusArea,
     } = renderAndCompleteUntilStep(SessionSetupStep.Group);
-
+    const areas = generateFocusAreas(randomIntFromInterval(3, 6));
     const focusAreaButtons = areas.map((area) =>
       queryByA11yLabel(areaButtonA11yLabel(area.name)),
     );
