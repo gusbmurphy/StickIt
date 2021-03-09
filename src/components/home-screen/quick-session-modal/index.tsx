@@ -15,6 +15,8 @@ import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import IntegerInput from '../../util/IntegerInput';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
+import {QuickSession} from '../../../types/quick-session';
+import {createSession} from './create-session';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -35,6 +37,7 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
   const [hours, setHours] = useState(0);
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [selectionIsMade, setSelectionIsMade] = useState(false);
+  const [session, setSession] = useState<QuickSession | null>(null);
 
   useEffect(() => {
     switch (currentStep) {
@@ -53,6 +56,12 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
   useEffect(() => {
     setTotalMinutes(minutes + hours);
   }, [minutes, hours]);
+
+  useEffect(() => {
+    if (totalMinutes > 0 && exerciseGroups && selectedExerciseGroup) {
+      setSession(createSession(totalMinutes, selectedExerciseGroup));
+    }
+  }, [totalMinutes, exerciseGroups, selectedExerciseGroup]);
 
   const areaButtons = props.areas.map((area, i) => (
     <AreaButton
@@ -116,7 +125,12 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
       case SessionSetupStep.Time:
         return <TimeInputView />;
       case SessionSetupStep.Summary:
-        return <GeneratedSessionSummaryView />;
+        return (
+          <GeneratedSessionSummaryView
+            session={session!}
+            exerciseGroups={exerciseGroups!}
+          />
+        );
     }
   };
 
