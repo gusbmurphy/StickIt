@@ -7,6 +7,12 @@ export const GeneratedSessionSummaryView = (props: {
   session: QuickSession;
   exerciseGroups: ExerciseGroup[];
 }) => {
+  if (props.session.exercises.length < 1) {
+    throw new Error(
+      'Session with no exercises passed to GeneratedSessionsSummaryView',
+    );
+  }
+
   let totalDuration = 0;
 
   const exercises = props.session.exercises.map((exercise, i) => {
