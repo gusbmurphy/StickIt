@@ -141,6 +141,12 @@ describe('Quick Session Modal', () => {
     );
   });
 
+  test.todo('there is a button to "skip" selecting a preffered exercise group');
+
+  test.todo(
+    'skipping the exercise group selection will proceed to the time input',
+  );
+
   test('the "Next" button is displayed after choosing an exercise group', () => {
     const {getByA11yLabel, selectedFocusArea} = renderAndCompleteUntilStep(
       SessionSetupStep.Group,
@@ -158,6 +164,7 @@ describe('Quick Session Modal', () => {
     expect(nextButton).toBeTruthy();
   });
 
+  // TODO: time inputs should be pickers
   test('after pressing the "Next" button, text inputs for hours and minutes are presented', () => {
     const {getByA11yLabel} = renderAndCompleteUntilStep(SessionSetupStep.Time);
 
@@ -189,6 +196,10 @@ describe('Quick Session Modal', () => {
     const nextButton = getByA11yLabel(nextButtonA11yLabel);
     expect(nextButton).toBeTruthy();
   });
+
+  test.todo(
+    'an input that would result in exercise lengths of 0 is not accepted',
+  );
 
   test('a summary of the generated session is presented after the "Next" button is pressed', async () => {
     const {getByA11yLabel} = renderAndCompleteUntilStep(
