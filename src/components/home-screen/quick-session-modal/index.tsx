@@ -122,23 +122,29 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
   );
 
   const CurrentStepView = () => {
+    let content;
     switch (currentStep) {
       case SessionSetupStep.Area:
-        return <View style={styles.areasView}>{areaButtons}</View>;
+        content = <View style={styles.areasView}>{areaButtons}</View>;
+        break;
       case SessionSetupStep.Group:
-        return (
+        content = (
           <View style={styles.exerciseGroupsView}>{exerciseGroupButtons}</View>
         );
+        break;
       case SessionSetupStep.Time:
-        return <TimeInputView />;
+        content = <TimeInputView />;
+        break;
       case SessionSetupStep.Summary:
-        return (
+        content = (
           <GeneratedSessionSummaryView
             session={session!}
             exerciseGroups={exerciseGroups!}
           />
         );
     }
+
+    return <View style={styles.currentStepView}>{content}</View>;
   };
 
   const NextButton = () => {
@@ -184,7 +190,11 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
       text = StepPrompts[currentStep];
     }
 
-    return <Text testID={stepPromptTestId}>{text}</Text>;
+    return (
+      <Text style={styles.promptText} testID={stepPromptTestId}>
+        {text}
+      </Text>
+    );
   };
 
   return (
@@ -195,12 +205,12 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
       {...props}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <View style={styles.textView}>
+          <View style={styles.headerView}>
             <Text style={styles.headerText}>Quick Session</Text>
             <CurrentPrompt />
           </View>
           <CurrentStepView />
-          <View>
+          <View style={styles.footer}>
             {selectionIsMade && <NextButton />}
             <StepIndicator
               currentStep={currentStep}
@@ -252,11 +262,21 @@ const styles = StyleSheet.create({
     elevation: 5,
     justifyContent: 'space-around',
   },
-  textView: {
+  headerView: {
+    flex: 1,
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 32,
+  },
+  promptText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginHorizontal: 12,
+  },
+  currentStepView: {
+    flex: 1,
   },
   areasView: {
     flexDirection: 'row',
@@ -283,6 +303,9 @@ const styles = StyleSheet.create({
   timeInputText: {
     marginLeft: 10,
     fontSize: 18,
+  },
+  footer: {
+    justifyContent: 'flex-end',
   },
   stepIndicator: {
     alignSelf: 'center',
