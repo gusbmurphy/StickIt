@@ -15,7 +15,7 @@ import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import IntegerInput from '../../util/IntegerInput';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
-import {QuickSession} from '../../../types/quick-session';
+import {ExerciseSession} from '../../../types/quick-session';
 import {createSession} from './create-session';
 
 export enum SessionSetupStep {
@@ -44,7 +44,7 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
   const [hours, setHours] = useState(0);
   const [totalMinutes, setTotalMinutes] = useState(0);
   const [selectionIsMade, setSelectionIsMade] = useState(false);
-  const [session, setSession] = useState<QuickSession | null>(null);
+  const [session, setSession] = useState<ExerciseSession | null>(null);
 
   useEffect(() => {
     switch (currentStep) {

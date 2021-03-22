@@ -8,7 +8,7 @@ import {
   summaryExerciseTestId,
   summaryTotalTimeA11yLabel,
 } from './GeneratedSessionSummaryView';
-import {QuickSession} from '../../../types/quick-session';
+import {ExerciseSession} from '../../../types/quick-session';
 
 const testExercises = [
   new Exercise('exercise1'),
@@ -21,7 +21,7 @@ testExercises.forEach((exercise) => {
   testExerciseGroup.addExercise(exercise);
 });
 
-const quickSession: QuickSession = {
+const quickSession: ExerciseSession = {
   exercises: testExercises,
   exerciseDurations: [
     {exerciseId: testExercises[0].id, duration: 5},

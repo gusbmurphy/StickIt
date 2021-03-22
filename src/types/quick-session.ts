@@ -1,6 +1,6 @@
 import {Exercise} from './exercise';
 
-export type QuickSession = {
+export type ExerciseSession = {
   exercises: Exercise[];
   exerciseDurations: {exerciseId: string; duration: number}[];
 };
