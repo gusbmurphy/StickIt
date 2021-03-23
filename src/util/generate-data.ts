@@ -1,6 +1,7 @@
 import {Exercise, ExerciseGroup, FocusArea} from '../types';
 import {random} from 'faker';
 import {randomIntFromInterval} from './random-int-from-interval';
+import {ExerciseSession} from '../types/quick-session';
 
 export function generateExercise() {
   return new Exercise(random.words(randomIntFromInterval(1, 3)));
@@ -34,4 +35,21 @@ export function generateFocusAreas(numOfAreas: number) {
   }
 
   return areas;
+}
+
+export function generateSession(): ExerciseSession {
+  const group = generateExerciseGroup();
+
+  const totalDuration = randomIntFromInterval(20, 60);
+  const durations = group.exercises.map((exercise) => {
+    return {
+      exerciseId: exercise.id,
+      duration: Math.floor(totalDuration / group.exercises.length),
+    };
+  });
+
+  return {
+    exercises: group.exercises,
+    exerciseDurations: durations,
+  };
 }
