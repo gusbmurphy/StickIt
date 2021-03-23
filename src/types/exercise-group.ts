@@ -12,6 +12,7 @@ export class ExerciseGroup {
     if (exercises) {
       exercises.forEach((exercise) => {
         exercise.parentGroupId = this.id;
+        exercise.parentGroupName = this.name;
       });
       this._exercises = exercises;
     } else {
@@ -25,6 +26,7 @@ export class ExerciseGroup {
 
   addExercise(newExercise: Exercise) {
     newExercise.parentGroupId = this.id;
+    newExercise.parentGroupName = this.name;
     this._exercises.push(newExercise);
   }
 }
