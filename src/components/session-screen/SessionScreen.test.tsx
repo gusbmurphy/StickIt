@@ -16,8 +16,8 @@ describe('Session Screen', () => {
 
     const firstName = session.exercises[0].name;
     const firstGroupName = session.exercises[0].parentGroupName!;
-    expect(within(name?.instance).getByText(firstName)).toBeTruthy();
-    expect(within(group?.instance).getByText(firstGroupName)).toBeTruthy();
+    expect(name).toHaveTextContent(firstName);
+    expect(group).toHaveTextContent(firstGroupName);
   });
 
   test.todo('there is an "Info" button');
