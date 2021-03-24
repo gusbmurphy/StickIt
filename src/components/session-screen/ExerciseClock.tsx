@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 
 const ExerciseClock = () => {
   return (
-    <View>
+    <View testID={clockTestId}>
       <Text>Exercise Clock</Text>
     </View>
   );
