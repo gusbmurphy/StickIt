@@ -15,7 +15,7 @@ import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import IntegerInput from '../../util/IntegerInput';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
-import {ExerciseSession} from '../../../types/quick-session';
+import {ExerciseSession} from '../../../types/exercise-session';
 import {createSession} from './create-session';
 
 export enum SessionSetupStep {

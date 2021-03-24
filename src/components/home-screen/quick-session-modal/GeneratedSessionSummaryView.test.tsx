@@ -8,7 +8,7 @@ import {
   summaryExerciseTestId,
   summaryTotalTimeA11yLabel,
 } from './GeneratedSessionSummaryView';
-import {ExerciseSession} from '../../../types/quick-session';
+import {ExerciseSession} from '../../../types/exercise-session';
 
 const testExercises = [
   new Exercise('exercise1'),

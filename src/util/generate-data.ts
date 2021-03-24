@@ -1,7 +1,7 @@
 import {Exercise, ExerciseGroup, FocusArea} from '../types';
 import {random} from 'faker';
 import {randomIntFromInterval} from './random-int-from-interval';
-import {ExerciseSession} from '../types/quick-session';
+import {ExerciseSession} from '../types/exercise-session';
 
 export function generateExercise() {
   return new Exercise(random.words(randomIntFromInterval(1, 3)));

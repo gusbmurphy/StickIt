@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {ExerciseGroup} from '../../../types';
-import {ExerciseSession} from '../../../types/quick-session';
+import {ExerciseSession} from '../../../types/exercise-session';
 import {SummaryExerciseView} from './SummaryExerciseView';
 
 export const GeneratedSessionSummaryView = (props: {
