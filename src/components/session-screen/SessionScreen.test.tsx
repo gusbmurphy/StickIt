@@ -1,7 +1,13 @@
 import React from 'react';
-import {render, within} from '@testing-library/react-native';
-import SessionScreen, {exerciseNameA11yLabel, exerciseGroupA11yLabel} from '.';
+import {render} from '@testing-library/react-native';
+import SessionScreen, {
+  exerciseNameA11yLabel,
+  exerciseGroupA11yLabel,
+  exerciseInfoButtonA11yLabel,
+} from '.';
 import {generateSession} from '../../util/generate-data';
+import {clockTestId} from './ExerciseClock';
+import {metronomeTestId} from './Metronome';
 
 describe('Session Screen', () => {
   test("the current exercise's name and focus group is displayed", () => {
@@ -20,12 +26,28 @@ describe('Session Screen', () => {
     expect(group).toHaveTextContent(firstGroupName);
   });
 
-  test.todo('there is an "Info" button');
+  test('there is an "Info" button', () => {
+    const session = generateSession();
+    const {queryByA11yLabel} = render(<SessionScreen session={session} />);
+    expect(queryByA11yLabel(exerciseInfoButtonA11yLabel)).toBeTruthy();
+  });
+
   test.todo(
     'pressing the info button brings up a modal with more info on the current exercise',
   );
-  test.todo('there is an ExerciseClock component');
-  test.todo('there is a Metronome component');
+
+  test('there is an ExerciseClock component', () => {
+    const session = generateSession();
+    const {queryByTestId} = render(<SessionScreen session={session} />);
+    expect(queryByTestId(clockTestId)).toBeTruthy();
+  });
+
+  test('there is a Metronome component', () => {
+    const session = generateSession();
+    const {queryByTestId} = render(<SessionScreen session={session} />);
+    expect(queryByTestId(metronomeTestId)).toBeTruthy();
+  });
+
   test.todo(
     'when the exercise has finished, an "Add Note" button is displayed',
   );
