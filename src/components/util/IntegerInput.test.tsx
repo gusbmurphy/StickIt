@@ -16,7 +16,7 @@ describe('Integer Input', () => {
   });
   test("deleting all the characters will pass a '0' to the onChange function", () => {
     const inputId = 'inputId';
-    const mockOnChange = jest.fn((value) => (x = value));
+    const mockOnChange = jest.fn(() => {});
 
     const {getByTestId} = render(
       <IntegerInput testID={inputId} onChange={mockOnChange} value={0} />,
