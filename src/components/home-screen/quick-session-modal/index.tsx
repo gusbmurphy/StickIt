@@ -17,6 +17,7 @@ import IntegerInput from '../../util/IntegerInput';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
 import {ExerciseSession} from '../../../types/exercise-session';
 import {createSession} from './create-session';
+import TimePicker from '../../util/TimePicker';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -99,26 +100,14 @@ const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
     : null;
 
   const TimeInputView = () => (
-    <View style={styles.timeInputsView}>
-      <View style={styles.individualTimeInputView}>
-        <IntegerInput
-          onChange={(v) => setMinutes(v)}
-          value={minutes}
-          accessibilityLabel={minuteInputA11yLabel}
-          style={styles.timeInput}
-        />
-        <Text style={styles.timeInputText}>min</Text>
-      </View>
-      <View style={styles.individualTimeInputView}>
-        <IntegerInput
-          onChange={(v) => setHours(v)}
-          value={hours}
-          accessibilityLabel={hourInputA11yLabel}
-          style={styles.timeInput}
-        />
-        <Text style={styles.timeInputText}>hr</Text>
-      </View>
-    </View>
+    <>
+      <TimePicker
+        minutes={minutes}
+        setMinutes={setMinutes}
+        hours={hours}
+        setHours={setHours}
+      />
+    </>
   );
 
   const CurrentStepView = () => {
