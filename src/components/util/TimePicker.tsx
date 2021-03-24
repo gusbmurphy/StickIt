@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {PickerIOS} from '@react-native-picker/picker';
 
 const hourItems = [...Array(5).keys()].map((value) => (
@@ -24,19 +24,33 @@ const TimePicker = ({
   setHours: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <PickerIOS
+        style={styles.picker}
         selectedValue={hours}
         onValueChange={(value) => setHours(parseInt(value.toString(), 10))}>
         {hourItems}
       </PickerIOS>
+      <Text>hours</Text>
       <PickerIOS
+        style={styles.picker}
         selectedValue={minutes}
         onValueChange={(value) => setMinutes(parseInt(value.toString(), 10))}>
         {minuteItems}
       </PickerIOS>
+      <Text>minutes</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  picker: {
+    flex: 1,
+  },
+});
 
 export default TimePicker;
