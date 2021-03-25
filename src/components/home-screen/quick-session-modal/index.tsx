@@ -13,7 +13,6 @@ import StepIndicator from './StepIndicator';
 import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
-import IntegerInput from '../../util/IntegerInput';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
 import {ExerciseSession} from '../../../types/exercise-session';
 import {createSession} from './create-session';
