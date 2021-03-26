@@ -5,8 +5,12 @@ import {StyleSheet} from 'react-native';
 import QuickSessionButton from './QuickSessionButton';
 import QuickSessionModal from './quick-session-modal';
 import {generateFocusAreas} from '../../util/generate-data';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../App';
 
-const HomeScreen = () => {
+const HomeScreen = (props: {
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+}) => {
   const [quickSessionModalVisible, setQuickSessionModalVisible] = useState(
     false,
   );
