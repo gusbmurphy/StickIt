@@ -1,22 +1,27 @@
 import React, {useState} from 'react';
-import {Text, View, Button, TouchableOpacity} from 'react-native';
-import {ExerciseSession} from '../../types/exercise-session';
+import {Text, View, TouchableOpacity} from 'react-native';
 import ExerciseClock from './ExerciseClock';
 import Metronome from './Metronome';
+import {RootStackParamList} from '../../../App';
+import {RouteProp} from '@react-navigation/native';
 
-const SessionScreen = ({session}: {session: ExerciseSession}) => {
+const SessionScreen = ({
+  route,
+}: {
+  route: RouteProp<RootStackParamList, 'Session'>;
+}) => {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
 
   return (
     <View>
       <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
-        Info
+        <Text>Info</Text>
       </TouchableOpacity>
       <Text accessibilityLabel={exerciseNameA11yLabel}>
-        {session.exercises[currentExerciseIndex].name}
+        {route.params.session.exercises[currentExerciseIndex].name}
       </Text>
       <Text accessibilityLabel={exerciseGroupA11yLabel}>
-        {session.exercises[currentExerciseIndex].parentGroupName}
+        {route.params.session.exercises[currentExerciseIndex].parentGroupName}
       </Text>
       <ExerciseClock />
       <Metronome />
