@@ -5,17 +5,24 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/components/home-screen';
 import SessionScreen from './src/components/session-screen';
+import {ExerciseSession} from './src/types';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  Session: {session: ExerciseSession};
+  QuickSessionModal: undefined;
+};
+
+const RootStack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Session" component={SessionScreen} />
-        </Stack.Navigator>
+        <RootStack.Navigator>
+          <RootStack.Screen name="Home" component={HomeScreen} />
+          <RootStack.Screen name="Session" component={SessionScreen} />
+        </RootStack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>
   );
