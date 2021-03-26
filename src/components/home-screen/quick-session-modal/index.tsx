@@ -33,6 +33,13 @@ export const StepPrompts = {
 };
 
 const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
+const QuickSessionModal = (
+  props: ModalProps & {
+    areas: FocusArea[];
+    onRequestNavigateToSession: (session: ExerciseSession) => void;
+    onRequestCloseSelfNoPlatform: () => void;
+  },
+) => {
   const [currentStep, setCurrentStep] = useState(SessionSetupStep.Area);
   const [selectedArea, setSelectedArea] = useState<FocusArea | null>(null);
   const exerciseGroups = useFocusAreaExerciseGroups(selectedArea);

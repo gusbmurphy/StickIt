@@ -20,6 +20,10 @@ const HomeScreen = (props: {
       <QuickSessionModal
         visible={quickSessionModalVisible}
         areas={generateFocusAreas(4)}
+        onRequestNavigateToSession={(session) =>
+          props.navigation.navigate('Session', {session})
+        }
+        onRequestCloseSelfNoPlatform={() => setQuickSessionModalVisible(false)}
       />
       <QuickSessionButton onPress={() => setQuickSessionModalVisible(true)} />
     </View>
