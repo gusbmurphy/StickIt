@@ -32,7 +32,6 @@ export const StepPrompts = {
   [SessionSetupStep.Time]: 'How much time do you have?',
 };
 
-const QuickSessionModal = (props: ModalProps & {areas: FocusArea[]}) => {
 const QuickSessionModal = (
   props: ModalProps & {
     areas: FocusArea[];
@@ -167,10 +166,23 @@ const QuickSessionModal = (
       case SessionSetupStep.Time:
         setCurrentStep(SessionSetupStep.Summary);
         break;
-      case SessionSetupStep.Summary:
-        console.log("Let's go!");
-        break;
     }
+  }
+
+  const StartButton = () => {
+    return (
+      <TouchableOpacity
+        accessibilityLabel={startButtonA11yLabel}
+        onPress={() => handleStartButtonPress()}>
+        <View style={appStyles.button}>
+          <Text style={appStyles.buttonText}>Start</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  function handleStartButtonPress() {
+    props.navigation.navigate('Session', {session: session!});
   }
 
   const CurrentPrompt = () => {
@@ -192,6 +204,21 @@ const QuickSessionModal = (
     );
   };
 
+  const NextOrStartButton = () => {
+    switch (currentStep) {
+      case SessionSetupStep.Area:
+      case SessionSetupStep.Group:
+      case SessionSetupStep.Time:
+        if (selectionIsMade) {
+          return <NextButton />;
+        } else {
+          return null;
+        }
+      case SessionSetupStep.Summary:
+        return <StartButton />;
+    }
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -206,7 +233,7 @@ const QuickSessionModal = (
           </View>
           <CurrentStepView />
           <View style={styles.footer}>
-            {selectionIsMade && <NextButton />}
+            <NextOrStartButton />
             <StepIndicator
               currentStep={currentStep}
               totalSteps={4}
