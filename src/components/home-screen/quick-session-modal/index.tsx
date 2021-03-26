@@ -105,14 +105,12 @@ const QuickSessionModal = (
     : null;
 
   const TimeInputView = () => (
-    <>
-      <TimePicker
-        minutes={minutes}
-        setMinutes={setMinutes}
-        hours={hours}
-        setHours={setHours}
-      />
-    </>
+    <TimePicker
+      minutes={minutes}
+      setMinutes={setMinutes}
+      hours={hours}
+      setHours={setHours}
+    />
   );
 
   const CurrentStepView = () => {
