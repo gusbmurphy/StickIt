@@ -26,6 +26,7 @@ const TimePicker = ({
   return (
     <View style={styles.mainContainer}>
       <PickerIOS
+        accessibilityLabel={hourPickerA11yLabel}
         style={styles.picker}
         selectedValue={hours}
         onValueChange={(value) => setHours(parseInt(value.toString(), 10))}>
@@ -33,6 +34,7 @@ const TimePicker = ({
       </PickerIOS>
       <Text>hours</Text>
       <PickerIOS
+        accessibilityLabel={minutePickerA11yLabel}
         style={styles.picker}
         selectedValue={minutes}
         onValueChange={(value) => setMinutes(parseInt(value.toString(), 10))}>
@@ -52,5 +54,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export const minutePickerA11yLabel = 'select a number of minutes';
+export const hourPickerA11yLabel = 'select a number of hours';
 
 export default TimePicker;
