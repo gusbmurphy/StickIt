@@ -180,7 +180,8 @@ const QuickSessionModal = (
   };
 
   function handleStartButtonPress() {
-    props.navigation.navigate('Session', {session: session!});
+    props.onRequestNavigateToSession(session!);
+    props.onRequestCloseSelfNoPlatform();
   }
 
   const CurrentPrompt = () => {
