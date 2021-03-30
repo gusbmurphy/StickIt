@@ -1,9 +1,27 @@
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import ExerciseClock from './ExerciseClock';
 import Metronome from './Metronome';
 import {RootStackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
+
+const Header = ({
+  name,
+  parentGroupName,
+}: {
+  name: string;
+  parentGroupName?: string;
+}) => (
+  <View style={styles.header}>
+    <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
+      <Text>Info</Text>
+    </TouchableOpacity>
+    <View style={styles.headerNamesContainer}>
+      <Text accessibilityLabel={exerciseNameA11yLabel}>{name}</Text>
+      <Text accessibilityLabel={exerciseGroupA11yLabel}>{parentGroupName}</Text>
+    </View>
+  </View>
+);
 
 const SessionScreen = ({
   route,
@@ -12,22 +30,38 @@ const SessionScreen = ({
 }) => {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
 
+  const {name, parentGroupName} = route.params.session.exercises[
+    currentExerciseIndex
+  ];
+
   return (
-    <View>
-      <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
-        <Text>Info</Text>
-      </TouchableOpacity>
-      <Text accessibilityLabel={exerciseNameA11yLabel}>
-        {route.params.session.exercises[currentExerciseIndex].name}
-      </Text>
-      <Text accessibilityLabel={exerciseGroupA11yLabel}>
-        {route.params.session.exercises[currentExerciseIndex].parentGroupName}
-      </Text>
+    <View style={styles.mainContainer}>
+      <Header name={name} parentGroupName={parentGroupName} />
       <ExerciseClock />
       <Metronome />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    marginVertical: 6,
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  headerNamesContainer: {
+    flexDirection: 'column',
+    flex: 1,
+  },
+});
 
 export default SessionScreen;
 
