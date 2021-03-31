@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
-import appStyles from '../../app-styles';
+import {buttonStyles} from '../../../styles';
 
 export const ExerciseGroupButton = (props: {
   name: string;
@@ -14,13 +14,11 @@ export const ExerciseGroupButton = (props: {
       accessibilityLabel={exerciseGroupA11yLabel(props.name)}>
       <View
         style={[
-          appStyles.button,
           styles.button,
           props.selected ? styles.buttonSelected : styles.buttonUnselected,
         ]}>
         <Text
           style={[
-            appStyles.buttonText,
             styles.buttonText,
             props.selected ? styles.buttonTextSelected : null,
           ]}>
@@ -33,6 +31,7 @@ export const ExerciseGroupButton = (props: {
 
 const styles = StyleSheet.create({
   button: {
+    ...buttonStyles.default,
     margin: 10,
     padding: 5,
     justifyContent: 'center',
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   buttonText: {
+    ...buttonStyles.text,
     color: 'black',
     textAlign: 'center',
     textAlignVertical: 'center',
