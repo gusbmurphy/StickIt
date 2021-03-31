@@ -4,6 +4,7 @@ import ExerciseClock from './ExerciseClock';
 import Metronome from './Metronome';
 import {RootStackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
+import StepIndicator from '../util/StepIndicator';
 
 const Header = ({
   name,
@@ -39,6 +40,10 @@ const SessionScreen = ({
       <Header name={name} parentGroupName={parentGroupName} />
       <ExerciseClock />
       <Metronome />
+      <StepIndicator
+        currentStep={currentExerciseIndex + 1}
+        totalSteps={route.params.session.exercises.length}
+      />
     </View>
   );
 };
