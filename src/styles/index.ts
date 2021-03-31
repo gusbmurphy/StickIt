@@ -1,3 +1,3 @@
-import * as Buttons from './buttons';
+import {buttonStyles} from './buttons';
 
-export {Buttons};
+export {buttonStyles};

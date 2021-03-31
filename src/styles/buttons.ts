@@ -1,17 +1,15 @@
 import {StyleSheet} from 'react-native';
 import colors from './colors';
 
-const buttonStyles = StyleSheet.create({
-  button: {
+export const buttonStyles = StyleSheet.create({
+  default: {
     backgroundColor: colors.primary,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
   },
-  buttonText: {
+  text: {
     color: 'white',
     textAlign: 'center',
   },
 });
-
-export default buttonStyles;
