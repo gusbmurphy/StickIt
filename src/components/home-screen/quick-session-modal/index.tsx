@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FocusArea} from '../../../types/focus-area';
-import appStyles from '../../app-styles';
 import StepIndicator from './StepIndicator';
 import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
@@ -17,6 +16,7 @@ import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
 import {ExerciseSession} from '../../../types/exercise-session';
 import {createSession} from './create-session';
 import TimePicker from '../../util/TimePicker';
+import {buttonStyles} from '../../../styles';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -144,10 +144,8 @@ const QuickSessionModal = (
       <TouchableOpacity
         accessibilityLabel={nextButtonA11yLabel}
         onPress={() => handleNextButtonPress()}>
-        <View style={appStyles.button}>
-          <Text style={[appStyles.buttonText, styles.nextButtonText]}>
-            Next
-          </Text>
+        <View style={buttonStyles.default}>
+          <Text style={[styles.nextButtonText]}>Next</Text>
         </View>
       </TouchableOpacity>
     );
@@ -172,8 +170,8 @@ const QuickSessionModal = (
       <TouchableOpacity
         accessibilityLabel={startButtonA11yLabel}
         onPress={() => handleStartButtonPress()}>
-        <View style={appStyles.button}>
-          <Text style={appStyles.buttonText}>Start</Text>
+        <View style={buttonStyles.default}>
+          <Text style={buttonStyles.text}>Start</Text>
         </View>
       </TouchableOpacity>
     );
@@ -307,6 +305,7 @@ const styles = StyleSheet.create({
   },
   exerciseGroupsView: {},
   nextButtonText: {
+    ...buttonStyles.text,
     fontWeight: 'bold',
   },
   timeInput: {
