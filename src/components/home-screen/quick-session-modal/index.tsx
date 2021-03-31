@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FocusArea} from '../../../types/focus-area';
-import StepIndicator from './StepIndicator';
+import StepIndicator from '../../util/StepIndicator';
 import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';

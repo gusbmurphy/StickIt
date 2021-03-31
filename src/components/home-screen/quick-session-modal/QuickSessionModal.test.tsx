@@ -14,7 +14,7 @@ import colors from '../../../styles/colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
 import {areaButtonA11yLabel} from './AreaButton';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
-import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from './StepIndicator';
+import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../../util/StepIndicator';
 import {summaryExerciseTestId} from './labels';
 import {generatedQuickSessionSummaryA11yLabel} from './GeneratedSessionSummaryView';
 import {randomIntFromInterval} from '../../../util/random-int-from-interval';
