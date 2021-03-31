@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import colors from '../../colors';
+import colors from '../../../styles/colors';
 
 const StepIndicator = (
   props: {currentStep: number; totalSteps: number} & React.ComponentProps<

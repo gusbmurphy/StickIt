@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Exercise} from '../../../types';
-import colors from '../../colors';
+import colors from '../../../styles/colors';
 import {
   summaryExerciseTestId,
   quickSessionSummaryExerciseA11yLabel,

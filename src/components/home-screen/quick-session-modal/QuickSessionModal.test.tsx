@@ -10,7 +10,7 @@ import QuickSessionModal, {
   stepPromptTestId,
 } from '.';
 import {generateFocusAreas} from '../../../util/generate-data';
-import colors from '../../colors';
+import colors from '../../../styles/colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
 import {areaButtonA11yLabel} from './AreaButton';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';

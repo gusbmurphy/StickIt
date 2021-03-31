@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-import colors from '../../colors';
+import colors from '../../../styles/colors';
 import appStyles from '../../app-styles';
 
 export const AreaButton = (props: {

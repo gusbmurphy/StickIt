@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import colors from '../colors';
+import colors from '../../styles/colors';
 
 const IntegerInput = (
   props: Omit<
