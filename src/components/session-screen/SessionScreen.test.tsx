@@ -8,11 +8,32 @@ import SessionScreen, {
 import {generateSession} from '../../util/generate-data';
 import {clockTestId} from './ExerciseClock';
 import {metronomeTestId} from './Metronome';
+import {NavigationContainer} from '@react-navigation/native';
+import {ExerciseSession} from '../../types';
+import {createStackNavigator} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../App';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+function createSessionScreenProps(
+  session: ExerciseSession,
+): React.ComponentProps<typeof SessionScreen> {
+  return {
+    route: {
+      key: 'test',
+      name: 'Session',
+      params: {
+        session,
+      },
+    },
+  };
+}
 
 describe('Session Screen', () => {
   test("the current exercise's name and focus group is displayed", () => {
     const session = generateSession();
-    const {queryByA11yLabel} = render(<SessionScreen session={session} />);
+    const {queryByA11yLabel} = render(
+      <SessionScreen {...createSessionScreenProps(session)} />,
+    );
 
     const name = queryByA11yLabel(exerciseNameA11yLabel);
     expect(name).toBeTruthy();
@@ -28,7 +49,9 @@ describe('Session Screen', () => {
 
   test('there is an "Info" button', () => {
     const session = generateSession();
-    const {queryByA11yLabel} = render(<SessionScreen session={session} />);
+    const {queryByA11yLabel} = render(
+      <SessionScreen {...createSessionScreenProps(session)} />,
+    );
     expect(queryByA11yLabel(exerciseInfoButtonA11yLabel)).toBeTruthy();
   });
 
@@ -38,13 +61,17 @@ describe('Session Screen', () => {
 
   test('there is an ExerciseClock component', () => {
     const session = generateSession();
-    const {queryByTestId} = render(<SessionScreen session={session} />);
+    const {queryByTestId} = render(
+      <SessionScreen {...createSessionScreenProps(session)} />,
+    );
     expect(queryByTestId(clockTestId)).toBeTruthy();
   });
 
   test('there is a Metronome component', () => {
     const session = generateSession();
-    const {queryByTestId} = render(<SessionScreen session={session} />);
+    const {queryByTestId} = render(
+      <SessionScreen {...createSessionScreenProps(session)} />,
+    );
     expect(queryByTestId(metronomeTestId)).toBeTruthy();
   });
 
