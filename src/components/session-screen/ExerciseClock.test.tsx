@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from '@testing-library/react-native';
+import {render, fireEvent, act} from '@testing-library/react-native';
 import ExerciseClock, {
   timeTextTestId,
   startButtonA11yLabel,
@@ -9,12 +9,16 @@ import {randomIntFromInterval} from '../../util/random-int-from-interval';
 
 describe('Exercise Clock', () => {
   test('it has a text display of the given time', () => {
-    const {getByTestId} = render(<ExerciseClock />);
+    const seconds = randomIntFromInterval(1, 59);
+    const minutes = randomIntFromInterval(1, 10);
+    const {getByTestId} = render(
+      <ExerciseClock seconds={seconds} minutes={minutes} />,
+    );
     expect(getByTestId(timeTextTestId)).toBeTruthy();
   });
 
   test('it has a "Start" button', () => {
-    const {getByA11yLabel} = render(<ExerciseClock />);
+    const {getByA11yLabel} = render(<ExerciseClock seconds={1} />);
     expect(getByA11yLabel(startButtonA11yLabel)).toBeTruthy();
   });
 
@@ -33,14 +37,14 @@ describe('Exercise Clock', () => {
     const secondsRemaining = seconds % 60;
     const minutes = randomIntFromInterval(1, 10);
 
-    const {getByA11yLabel} = render(
+    const {getByTestId} = render(
       <ExerciseClock minutes={minutes} seconds={seconds} />,
     );
-    expect(
-      getByA11yLabel(
-        currentTimeA11yLabel(minutes + minutesInSeconds, secondsRemaining),
-      ),
-    ).toBeTruthy();
+    const timeText = getByTestId(timeTextTestId);
+
+    expect(timeText.props.accessibilityLabel).toBe(
+      currentTimeA11yLabel(minutesInSeconds + minutes, secondsRemaining),
+    );
   });
 
   test('the text display begins at the correct amount of time if passed only minutes', () => {
