@@ -66,12 +66,84 @@ describe('Exercise Clock', () => {
   });
 
   test('if no seconds or minutes are passed, an error is thrown', () => {
-    expect(render(<ExerciseClock />)).toThrowError();
+    expect(() => render(<ExerciseClock />)).toThrowError();
   });
 
-  test.todo(
-    'after pressing the start button, the time display decrements in seconds',
-  );
-  test.todo('upon pressing the start button, the "onStart" function is called');
-  test.todo('when the timer reaches "0:00", the "onFinish" function is called');
+  describe('Time-sensitive Tests', () => {
+    beforeEach(() => jest.useFakeTimers());
+
+    test('after pressing the start button, the time display decrements with every second, until it reaches the end', () => {
+      const seconds = randomIntFromInterval(1, 59);
+      const minutes = randomIntFromInterval(1, 10);
+      const totalSeconds = seconds + minutes * 60;
+
+      const {getByA11yLabel, getByTestId} = render(
+        <ExerciseClock seconds={seconds} minutes={minutes} />,
+      );
+
+      const startButton = getByA11yLabel(startButtonA11yLabel);
+      const timeText = getByTestId(timeTextTestId);
+
+      act(() => fireEvent.press(startButton));
+
+      let msRemaining = totalSeconds * 1000;
+      while (msRemaining > 0) {
+        jest.advanceTimersByTime(1000);
+        msRemaining -= 1000;
+        expect(timeText.props.accessibilityLabel).toBe(
+          currentTimeA11yLabel(0, msRemaining / 1000),
+        );
+      }
+
+      // Ensure that the timer is not advanced after it should be stopped
+      jest.advanceTimersByTime(1000);
+      expect(timeText.props.accessibilityLabel).toBe(
+        currentTimeA11yLabel(0, 0),
+      );
+    });
+
+    test('when the timer reaches "0:00", the "onFinish" function is called', () => {
+      const seconds = randomIntFromInterval(1, 59);
+      const minutes = randomIntFromInterval(1, 10);
+      const totalSeconds = seconds + minutes * 60;
+
+      const onFinish = jest.fn();
+
+      const {getByA11yLabel} = render(
+        <ExerciseClock
+          onFinish={onFinish}
+          seconds={seconds}
+          minutes={minutes}
+        />,
+      );
+
+      const startButton = getByA11yLabel(startButtonA11yLabel);
+
+      act(() => fireEvent.press(startButton));
+
+      let msRemaining = totalSeconds * 1000;
+      while (msRemaining > 0) {
+        jest.advanceTimersByTime(1000);
+        msRemaining -= 1000;
+      }
+
+      expect(onFinish).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  test('upon pressing the start button, the "onStart" function is called', () => {
+    const seconds = randomIntFromInterval(1, 59);
+    const minutes = randomIntFromInterval(1, 10);
+
+    const onStart = jest.fn();
+
+    const {getByA11yLabel} = render(
+      <ExerciseClock onStart={onStart} seconds={seconds} minutes={minutes} />,
+    );
+
+    const startButton = getByA11yLabel(startButtonA11yLabel);
+    act(() => fireEvent.press(startButton));
+
+    expect(onStart).toHaveBeenCalledTimes(1);
+  });
 });
