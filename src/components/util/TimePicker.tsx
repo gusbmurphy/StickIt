@@ -2,11 +2,13 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {PickerIOS} from '@react-native-picker/picker';
 
-const hourItems = [...Array(5).keys()].map((value) => (
+export const hourPickerValues = [...Array(5).keys()];
+const hourPickerItems = hourPickerValues.map((value) => (
   <PickerIOS.Item label={value.toString()} value={value} key={value} />
 ));
 
-const minuteItems = [...Array(61).keys()]
+export const minutePickerValues = [...Array(61).keys()];
+const minutePickerItems = minutePickerValues
   .filter((value) => value % 5 === 0)
   .map((value) => (
     <PickerIOS.Item label={value.toString()} value={value} key={value} />
@@ -30,7 +32,7 @@ const TimePicker = ({
         style={styles.picker}
         selectedValue={hours}
         onValueChange={(value) => setHours(parseInt(value.toString(), 10))}>
-        {hourItems}
+        {hourPickerItems}
       </PickerIOS>
       <Text>hours</Text>
       <PickerIOS
@@ -38,7 +40,7 @@ const TimePicker = ({
         style={styles.picker}
         selectedValue={minutes}
         onValueChange={(value) => setMinutes(parseInt(value.toString(), 10))}>
-        {minuteItems}
+        {minutePickerItems}
       </PickerIOS>
       <Text>minutes</Text>
     </View>
