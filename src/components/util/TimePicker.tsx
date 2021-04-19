@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
 
 export const minutePickerA11yLabel = 'select a number of minutes';
 export const hourPickerA11yLabel = 'select a number of hours';
+export const timePickerTestId = 'time-picker';
 
 export default TimePicker;
