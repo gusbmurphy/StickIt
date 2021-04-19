@@ -84,22 +84,24 @@ describe('Exercise Clock', () => {
       const startButton = getByA11yLabel(startButtonA11yLabel);
       const timeText = getByTestId(timeTextTestId);
 
-      act(() => fireEvent.press(startButton));
+      act(() => {
+        fireEvent.press(startButton);
 
-      let msRemaining = totalSeconds * 1000;
-      while (msRemaining > 0) {
+        let msRemaining = totalSeconds * 1000;
+        while (msRemaining > 0) {
+          jest.advanceTimersByTime(1000);
+          msRemaining -= 1000;
+          expect(timeText.props.accessibilityLabel).toBe(
+            currentTimeA11yLabel(0, msRemaining / 1000),
+          );
+        }
+
+        // Ensure that the timer is not advanced after it should be stopped
         jest.advanceTimersByTime(1000);
-        msRemaining -= 1000;
         expect(timeText.props.accessibilityLabel).toBe(
-          currentTimeA11yLabel(0, msRemaining / 1000),
+          currentTimeA11yLabel(0, 0),
         );
-      }
-
-      // Ensure that the timer is not advanced after it should be stopped
-      jest.advanceTimersByTime(1000);
-      expect(timeText.props.accessibilityLabel).toBe(
-        currentTimeA11yLabel(0, 0),
-      );
+      });
     });
 
     test('when the timer reaches "0:00", the "onFinish" function is called', () => {
@@ -119,13 +121,15 @@ describe('Exercise Clock', () => {
 
       const startButton = getByA11yLabel(startButtonA11yLabel);
 
-      act(() => fireEvent.press(startButton));
+      act(() => {
+        fireEvent.press(startButton);
 
-      let msRemaining = totalSeconds * 1000;
-      while (msRemaining > 0) {
-        jest.advanceTimersByTime(1000);
-        msRemaining -= 1000;
-      }
+        let msRemaining = totalSeconds * 1000;
+        while (msRemaining > 0) {
+          jest.advanceTimersByTime(1000);
+          msRemaining -= 1000;
+        }
+      });
 
       expect(onFinish).toHaveBeenCalledTimes(1);
     });
