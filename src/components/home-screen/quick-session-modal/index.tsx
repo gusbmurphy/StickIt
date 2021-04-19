@@ -67,7 +67,7 @@ const QuickSessionModal = (
   }, [selectedArea, selectedExerciseGroup, totalMinutes, currentStep]);
 
   useEffect(() => {
-    setTotalMinutes(minutes + hours);
+    setTotalMinutes(minutes + hours * 60);
   }, [minutes, hours]);
 
   useEffect(() => {
