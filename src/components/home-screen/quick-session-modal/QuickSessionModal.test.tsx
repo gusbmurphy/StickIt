@@ -8,16 +8,21 @@ import QuickSessionModal, {
   startButtonA11yLabel,
   StepPrompts,
   stepPromptTestId,
+  exerciseGroupSkipA11yLabel,
 } from '.';
 import {generateFocusAreas} from '../../../util/generate-data';
 import colors from '../../../styles/colors';
 import {ExerciseGroup, FocusArea} from '../../../types';
 import {areaButtonA11yLabel} from './AreaButton';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
-import {stepIndicatorA11yLabel, stepIndicatorPipTestId} from '../../util/StepIndicator';
+import {
+  stepIndicatorA11yLabel,
+  stepIndicatorPipTestId,
+} from '../../util/StepIndicator';
 import {summaryExerciseTestId} from './labels';
 import {generatedQuickSessionSummaryA11yLabel} from './GeneratedSessionSummaryView';
 import {randomIntFromInterval} from '../../../util/random-int-from-interval';
+import {act} from 'react-test-renderer';
 
 interface RenderAndCompleteUntilStepReturnObject
   extends ReturnType<typeof render> {
@@ -141,11 +146,25 @@ describe('Quick Session Modal', () => {
     );
   });
 
-  test.todo('there is a button to "skip" selecting a preffered exercise group');
+  test('there is a button to "skip" selecting a preffered exercise group', () => {
+    const {getByA11yLabel} = renderAndCompleteUntilStep(SessionSetupStep.Group);
+    expect(getByA11yLabel(exerciseGroupSkipA11yLabel)).toBeTruthy();
+  });
 
-  test.todo(
-    'skipping the exercise group selection will proceed to the time input',
-  );
+  test('skipping the exercise group selection will proceed to the time input', () => {
+    const {getByA11yLabel} = renderAndCompleteUntilStep(SessionSetupStep.Group);
+    const skipButton = getByA11yLabel(exerciseGroupSkipA11yLabel);
+
+    act(() => {
+      fireEvent.press(skipButton);
+    });
+
+    const minuteInput = getByA11yLabel(minuteInputA11yLabel);
+    const hourInput = getByA11yLabel(hourInputA11yLabel);
+
+    expect(minuteInput).toBeTruthy();
+    expect(hourInput).toBeTruthy();
+  });
 
   test('the "Next" button is displayed after choosing an exercise group', () => {
     const {getByA11yLabel, selectedFocusArea} = renderAndCompleteUntilStep(

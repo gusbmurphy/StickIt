@@ -338,5 +338,6 @@ export const exerciseRerollButtonTestId = 'reroll-button';
 export const nextButtonA11yLabel = 'Proceed to next choice';
 export const minuteInputA11yLabel = 'Enter number of minutes for session';
 export const hourInputA11yLabel = 'Enter number of hours for session';
+export const exerciseGroupSkipA11yLabel = 'Skip selecting a preferred exercise';
 
 export default QuickSessionModal;
