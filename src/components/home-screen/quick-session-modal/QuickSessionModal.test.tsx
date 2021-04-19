@@ -111,7 +111,7 @@ function renderAndCompleteUntilStep(
 describe('Quick Session Modal', () => {
   test('at first shows buttons to select a focus area for each area', () => {
     const areas = generateFocusAreas(randomIntFromInterval(3, 6));
-    const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
+    const {getByA11yLabel} = renderAndCompleteUntilStep(SessionSetupStep.Area);
 
     const focusAreaButtons = areas.map((area) =>
       getByA11yLabel(areaButtonA11yLabel(area.name)),
@@ -122,7 +122,7 @@ describe('Quick Session Modal', () => {
 
   test('after selecting one, a "Next" button is revealed', () => {
     const areas = generateFocusAreas(randomIntFromInterval(3, 6));
-    const {getByA11yLabel} = render(<QuickSessionModal areas={areas} />);
+    const {getByA11yLabel} = renderAndCompleteUntilStep(SessionSetupStep.Area);
 
     const focusAreaButtons = areas.map((area) =>
       getByA11yLabel(areaButtonA11yLabel(area.name)),
@@ -137,8 +137,9 @@ describe('Quick Session Modal', () => {
   });
 
   test('the "Next" is not shown when an area isn\'t selected', () => {
-    const areas = generateFocusAreas(randomIntFromInterval(3, 6));
-    const {queryByA11yLabel} = render(<QuickSessionModal areas={areas} />);
+    const {queryByA11yLabel} = renderAndCompleteUntilStep(
+      SessionSetupStep.Area,
+    );
     expect(queryByA11yLabel(nextButtonA11yLabel)).toBeFalsy();
   });
 
