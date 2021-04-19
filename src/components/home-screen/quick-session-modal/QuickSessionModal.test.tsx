@@ -23,6 +23,11 @@ import {summaryExerciseTestId} from './labels';
 import {generatedQuickSessionSummaryA11yLabel} from './GeneratedSessionSummaryView';
 import {randomIntFromInterval} from '../../../util/random-int-from-interval';
 import {act} from 'react-test-renderer';
+import {
+  timePickerTestId,
+  minutePickerA11yLabel,
+  hourPickerA11yLabel,
+} from '../../util/TimePicker';
 
 interface RenderAndCompleteUntilStepReturnObject
   extends ReturnType<typeof render> {
@@ -30,14 +35,28 @@ interface RenderAndCompleteUntilStepReturnObject
   selectedExerciseGroup?: ExerciseGroup;
   selectedMinuteValue?: number;
   selectedHourValue?: number;
+  onRequestNavigateToSession?: ReturnType<typeof jest.fn>;
+  onRequestCloseSelfNoPlatform?: ReturnType<typeof jest.fn>;
 }
 
 function renderAndCompleteUntilStep(
   stopStep: SessionSetupStep,
 ): RenderAndCompleteUntilStepReturnObject {
   const areas = generateFocusAreas(randomIntFromInterval(3, 6));
-  const helpers = render(<QuickSessionModal areas={areas} />);
-  let returnObject: RenderAndCompleteUntilStepReturnObject = {...helpers};
+  const onRequestNavigateToSession = jest.fn();
+  const onRequestCloseSelfNoPlatform = jest.fn();
+  const helpers = render(
+    <QuickSessionModal
+      areas={areas}
+      onRequestNavigateToSession={onRequestNavigateToSession}
+      onRequestCloseSelfNoPlatform={onRequestCloseSelfNoPlatform}
+    />,
+  );
+  let returnObject: RenderAndCompleteUntilStepReturnObject = {
+    ...helpers,
+    onRequestNavigateToSession,
+    onRequestCloseSelfNoPlatform,
+  };
   const {getByA11yLabel} = helpers;
 
   if (stopStep > SessionSetupStep.Area) {
@@ -66,11 +85,11 @@ function renderAndCompleteUntilStep(
       fireEvent.press(nextButton);
 
       if (stopStep > SessionSetupStep.Time) {
-        const minuteInput = getByA11yLabel(minuteInputA11yLabel);
+        const minuteInput = getByA11yLabel(minutePickerA11yLabel);
         const numOfMinutes = randomIntFromInterval(5, 30);
         fireEvent.changeText(minuteInput, numOfMinutes.toString());
 
-        const hourInput = getByA11yLabel(hourInputA11yLabel);
+        const hourInput = getByA11yLabel(hourPickerA11yLabel);
         const numOfHours = randomIntFromInterval(1, 3);
         fireEvent.changeText(hourInput, numOfHours.toString());
 
