@@ -29,16 +29,18 @@ const SessionScreen = ({
 }: {
   route: RouteProp<RootStackParamList, 'Session'>;
 }) => {
+  const {
+    session: {exercises, exerciseDurations},
+  } = route.params;
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
 
-  const {name, parentGroupName} = route.params.session.exercises[
-    currentExerciseIndex
-  ];
+  const {name, parentGroupName, id} = exercises[currentExerciseIndex];
+  const {duration} = exerciseDurations.find((d) => d.exerciseId === id)!;
 
   return (
     <View style={styles.mainContainer}>
       <Header name={name} parentGroupName={parentGroupName} />
-      <ExerciseClock />
+      <ExerciseClock minutes={duration} />
       <Metronome />
       <StepIndicator
         currentStep={currentExerciseIndex + 1}
