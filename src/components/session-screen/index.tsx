@@ -6,24 +6,6 @@ import {RootStackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import StepIndicator from '../util/StepIndicator';
 
-const Header = ({
-  name,
-  parentGroupName,
-}: {
-  name: string;
-  parentGroupName?: string;
-}) => (
-  <View style={styles.header}>
-    <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
-      <Text>Info</Text>
-    </TouchableOpacity>
-    <View style={styles.headerNamesContainer}>
-      <Text accessibilityLabel={exerciseNameA11yLabel}>{name}</Text>
-      <Text accessibilityLabel={exerciseGroupA11yLabel}>{parentGroupName}</Text>
-    </View>
-  </View>
-);
-
 const SessionScreen = ({
   route,
 }: {
@@ -33,19 +15,54 @@ const SessionScreen = ({
     session: {exercises, exerciseDurations},
   } = route.params;
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [showAddNoteButton, setShowAddNoteButton] = useState(false);
+  const [showNextButton, setShowNextButton] = useState(false);
 
   const {name, parentGroupName, id} = exercises[currentExerciseIndex];
   const {duration} = exerciseDurations.find((d) => d.exerciseId === id)!;
 
+  const onTimerComplete = () => {
+    setShowAddNoteButton(true);
+    setShowNextButton(true);
+  };
+
+  const Header = () => (
+    <View style={styles.header}>
+      <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
+        <Text>Info</Text>
+      </TouchableOpacity>
+      <View style={styles.headerNamesContainer}>
+        <Text accessibilityLabel={exerciseNameA11yLabel}>{name}</Text>
+        <Text accessibilityLabel={exerciseGroupA11yLabel}>
+          {parentGroupName}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const AddNoteButton = () => (
+    <TouchableOpacity accessibilityLabel={addNoteButtonA11yLabel}>
+      <Text>{'Add Note'}</Text>
+    </TouchableOpacity>
+  );
+
+  const NextButton = () => (
+    <TouchableOpacity accessibilityLabel={nextButtonA11yLabel}>
+      <Text>{'Next'}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.mainContainer}>
-      <Header name={name} parentGroupName={parentGroupName} />
-      <ExerciseClock minutes={duration} />
+      <Header />
+      <ExerciseClock minutes={duration} onFinish={() => onTimerComplete()}/>
       <Metronome />
       <StepIndicator
         currentStep={currentExerciseIndex + 1}
         totalSteps={route.params.session.exercises.length}
       />
+      {showAddNoteButton && <AddNoteButton />}
+      {showNextButton && <NextButton />}
     </View>
   );
 };
