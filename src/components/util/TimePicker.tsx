@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   picker: {
     flex: 1,
