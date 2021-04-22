@@ -3,15 +3,27 @@ import {View, StyleSheet, Text} from 'react-native';
 import {PickerIOS} from '@react-native-picker/picker';
 
 export const hourPickerValues = [...Array(5).keys()];
+export const hourItemTestId = (value: number) => `${value}-value-hour`;
 const hourPickerItems = hourPickerValues.map((value) => (
-  <PickerIOS.Item label={value.toString()} value={value} key={value} />
+  <PickerIOS.Item
+    label={value.toString()}
+    value={value}
+    key={value}
+    testID={hourItemTestId(value)}
+  />
 ));
 
 export const minutePickerValues = [...Array(61).keys()];
+export const minuteItemTestId = (value: number) => `${value}-value-minute`;
 const minutePickerItems = minutePickerValues
   .filter((value) => value % 5 === 0)
   .map((value) => (
-    <PickerIOS.Item label={value.toString()} value={value} key={value} />
+    <PickerIOS.Item
+      label={value.toString()}
+      value={value}
+      key={value}
+      testID={minuteItemTestId(value)}
+    />
   ));
 
 const TimePicker = ({
@@ -26,9 +38,10 @@ const TimePicker = ({
   setHours: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   return (
-    <View style={styles.mainContainer}>
+    <View style={styles.mainContainer} testID={timePickerTestId}>
       <PickerIOS
         accessibilityLabel={hourPickerA11yLabel}
+        testID={hourPickerTestId}
         style={styles.picker}
         selectedValue={hours}
         onValueChange={(value) => setHours(parseInt(value.toString(), 10))}>
@@ -37,6 +50,7 @@ const TimePicker = ({
       <Text>hours</Text>
       <PickerIOS
         accessibilityLabel={minutePickerA11yLabel}
+        testID={minutePickerTestId}
         style={styles.picker}
         selectedValue={minutes}
         onValueChange={(value) => setMinutes(parseInt(value.toString(), 10))}>
@@ -58,7 +72,9 @@ const styles = StyleSheet.create({
 });
 
 export const minutePickerA11yLabel = 'select a number of minutes';
+export const minutePickerTestId = 'minute-picker';
 export const hourPickerA11yLabel = 'select a number of hours';
+export const hourPickerTestId = 'hour-picker';
 export const timePickerTestId = 'time-picker';
 
 export default TimePicker;
