@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
-import {buttonStyles} from '../../../styles';
+import {buttonStyles, fontSizes} from '../../../styles';
 
 export const ExerciseGroupButton = (props: {
   name: string;
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   button: {
     ...buttonStyles.default,
     margin: 10,
-    padding: 5,
+    padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -45,9 +45,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     ...buttonStyles.text,
-    color: 'black',
+    color: colors.text,
     textAlign: 'center',
     textAlignVertical: 'center',
+    fontSize: fontSizes.large,
   },
   buttonTextSelected: {
     color: 'white',
