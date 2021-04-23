@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   Modal,
   StyleSheet,
-  Text,
   View,
   ModalProps,
   TouchableOpacity,
@@ -16,7 +15,8 @@ import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
 import {ExerciseSession} from '../../../types/exercise-session';
 import {createSession} from './create-session';
 import TimePicker from '../../util/TimePicker';
-import {buttonStyles} from '../../../styles';
+import Text from '../../../styles/components/StyledText';
+import {buttonStyles, colors, fontSizes, shadows} from '../../../styles';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -136,7 +136,12 @@ const QuickSessionModal = (
         );
     }
 
-    return <View style={styles.currentStepView}>{content}</View>;
+    return (
+      <View style={styles.currentStepView}>
+        <CurrentPrompt />
+        {content}
+      </View>
+    );
   };
 
   const NextButton = () => {
@@ -144,8 +149,8 @@ const QuickSessionModal = (
       <TouchableOpacity
         accessibilityLabel={nextButtonA11yLabel}
         onPress={() => handleNextButtonPress()}>
-        <View style={buttonStyles.default}>
-          <Text style={[styles.nextButtonText]}>Next</Text>
+        <View style={styles.nextButton}>
+          <Text style={styles.nextButtonText}>Next</Text>
         </View>
       </TouchableOpacity>
     );
@@ -170,8 +175,15 @@ const QuickSessionModal = (
       <TouchableOpacity
         accessibilityLabel={startButtonA11yLabel}
         onPress={() => handleStartButtonPress()}>
-        <View style={buttonStyles.default}>
-          <Text style={buttonStyles.text}>Start</Text>
+        <View style={[styles.nextButton, styles.startButton, shadows.light]}>
+          <Text
+            style={[
+              styles.nextButtonText,
+              styles.startButtonText,
+              shadows.medium,
+            ]}>
+            Start
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -226,7 +238,6 @@ const QuickSessionModal = (
         <View style={styles.modalView}>
           <View style={styles.headerView}>
             <Text style={styles.headerText}>Quick Session</Text>
-            <CurrentPrompt />
           </View>
           <CurrentStepView />
           <View style={styles.footer}>
@@ -270,6 +281,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
+    paddingBottom: 60,
     alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
@@ -280,22 +292,26 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     justifyContent: 'space-around',
+    width: '90%',
   },
   headerView: {
-    flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 32,
+    marginBottom: 52,
+    fontSize: fontSizes.xLarge,
   },
   promptText: {
-    fontSize: 18,
+    fontSize: 20,
     textAlign: 'center',
     marginHorizontal: 12,
+    marginBottom: 18,
   },
   currentStepView: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
   areasView: {
     flexDirection: 'row',
@@ -304,9 +320,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   exerciseGroupsView: {},
+  nextButton: {
+    ...buttonStyles.default,
+    paddingVertical: 18,
+  },
+  startButton: {
+    backgroundColor: colors.primaryAction,
+  },
+  startButtonText: {
+    fontWeight: 'bold',
+    color: 'white',
+  },
   nextButtonText: {
     ...buttonStyles.text,
-    fontWeight: 'bold',
+    fontSize: fontSizes.xLarge,
   },
   timeInput: {
     fontSize: 18,
