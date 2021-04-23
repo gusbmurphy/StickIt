@@ -6,6 +6,7 @@ import {RootStackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import StepIndicator from '../util/StepIndicator';
 import Text from '../../styles/components/StyledText';
+import InfoIcon from '../../assets/info.svg';
 
 const SessionScreen = ({
   route,
@@ -42,7 +43,7 @@ const SessionScreen = ({
   const Header = () => (
     <View style={styles.header}>
       <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
-        <Text>Info</Text>
+        <InfoIcon />
       </TouchableOpacity>
       <View style={styles.headerNamesContainer}>
         <Text
