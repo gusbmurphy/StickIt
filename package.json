@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@expo/metro-config": "^0.1.64",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-picker/picker": "^1.12.0",
     "@react-navigation/native": "^5.9.2",
@@ -23,6 +24,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.17.1",
+    "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^8.0.0",
     "uuid": "^3.4.0"
   },
@@ -41,6 +43,7 @@
     "jest": "^25.1.0",
     "jest-mock-extended": "^1.0.13",
     "metro-react-native-babel-preset": "^0.59.0",
+    "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "16.13.1",
     "typescript": "^3.8.3"
   },
