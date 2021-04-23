@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import ExerciseClock from './ExerciseClock';
 import Metronome from './Metronome';
 import {RootStackParamList} from '../../../App';
 import {RouteProp} from '@react-navigation/native';
 import StepIndicator from '../util/StepIndicator';
+import Text from '../../styles/components/StyledText';
 
 const SessionScreen = ({
   route,
@@ -26,20 +27,6 @@ const SessionScreen = ({
     setShowNextButton(true);
   };
 
-  const Header = () => (
-    <View style={styles.header}>
-      <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
-        <Text>Info</Text>
-      </TouchableOpacity>
-      <View style={styles.headerNamesContainer}>
-        <Text accessibilityLabel={exerciseNameA11yLabel}>{name}</Text>
-        <Text accessibilityLabel={exerciseGroupA11yLabel}>
-          {parentGroupName}
-        </Text>
-      </View>
-    </View>
-  );
-
   const AddNoteButton = () => (
     <TouchableOpacity accessibilityLabel={addNoteButtonA11yLabel}>
       <Text>{'Add Note'}</Text>
@@ -52,10 +39,30 @@ const SessionScreen = ({
     </TouchableOpacity>
   );
 
+  const Header = () => (
+    <View style={styles.header}>
+      <TouchableOpacity accessibilityLabel={exerciseInfoButtonA11yLabel}>
+        <Text>Info</Text>
+      </TouchableOpacity>
+      <View style={styles.headerNamesContainer}>
+        <Text
+          accessibilityLabel={exerciseGroupA11yLabel}
+          style={styles.parentGroupName}>
+          {parentGroupName}
+        </Text>
+        <Text
+          style={styles.exerciseName}
+          accessibilityLabel={exerciseNameA11yLabel}>
+          {name}
+        </Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.mainContainer}>
       <Header />
-      <ExerciseClock minutes={duration} onFinish={() => onTimerComplete()}/>
+      <ExerciseClock minutes={duration} onFinish={() => onTimerComplete()} />
       <Metronome />
       <StepIndicator
         currentStep={currentExerciseIndex + 1}
@@ -73,6 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   header: {
     flexDirection: 'row',
@@ -80,10 +88,18 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     width: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   headerNamesContainer: {
     flexDirection: 'column',
     flex: 1,
+  },
+  parentGroupName: {
+    fontSize: 14,
+    textTransform: 'lowercase',
+  },
+  exerciseName: {
+    fontSize: 20,
   },
 });
 
