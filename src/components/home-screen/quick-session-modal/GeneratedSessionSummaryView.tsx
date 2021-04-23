@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {ExerciseGroup} from '../../../types';
 import {ExerciseSession} from '../../../types/exercise-session';
 import {SummaryExerciseView} from './SummaryExerciseView';
@@ -40,12 +40,23 @@ export const GeneratedSessionSummaryView = (props: {
   return (
     <View accessibilityLabel={generatedQuickSessionSummaryA11yLabel}>
       {exercises}
-      <Text accessibilityLabel={summaryTotalTimeA11yLabel(totalDuration)}>
+      <Text
+        style={styles.durationText}
+        accessibilityLabel={summaryTotalTimeA11yLabel(totalDuration)}>
         {totalDuration}
+        {' min'}
       </Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  durationText: {
+    textAlign: 'right',
+    marginTop: 32,
+    fontSize: 18,
+  },
+});
 
 export const generatedQuickSessionSummaryA11yLabel =
   'Summary of generated quick session';
