@@ -13,10 +13,10 @@ module.exports = (async () => {
           inlineRequires: false,
         },
       }),
-      resolver: {
-        assetExts: assetExts.filter((ext) => ext !== 'svg'),
-        sourceExts: [...sourceExts, 'svg'],
-      },
+    },
+    resolver: {
+      assetExts: assetExts.filter((ext) => ext !== 'svg'),
+      sourceExts: [...sourceExts, 'svg'],
     },
   };
 })();
