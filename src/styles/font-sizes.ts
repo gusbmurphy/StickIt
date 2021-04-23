@@ -1,5 +1,6 @@
 const fontSizes = {
-  large: 32,
+  xLarge: 32,
+  large: 26, 
 };
 
 export default fontSizes;
