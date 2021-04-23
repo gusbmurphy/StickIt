@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   pipView: {
+    marginVertical: 10,
     flexDirection: 'row',
   },
 });
