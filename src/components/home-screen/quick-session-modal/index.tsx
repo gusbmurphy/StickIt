@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    margin: 20,
+    marginTop: 30,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     justifyContent: 'space-around',
-    width: '90%',
+    width: '100%',
   },
   headerView: {
     justifyContent: 'space-around',
