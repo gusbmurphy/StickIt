@@ -7,14 +7,18 @@ import {randomIntFromInterval} from '../../../util/random-int-from-interval';
 import {areaButtonA11yLabel} from './AreaButton';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
 import {
-  minutePickerA11yLabel,
   minutePickerValues,
-  hourPickerA11yLabel,
   hourPickerValues,
+  timePickerTestId,
+  minutePickerTestId,
+  hourPickerTestId,
+  minuteItemTestId,
+  hourItemTestId,
 } from '../../util/TimePicker';
 
 interface RenderAndCompleteUntilStepReturnObject
   extends ReturnType<typeof render> {
+  areas: FocusArea[];
   selectedFocusArea?: FocusArea;
   selectedExerciseGroup?: ExerciseGroup;
   selectedMinuteValue?: number;
@@ -38,10 +42,11 @@ export function renderAndCompleteUntilStep(
   );
   let returnObject: RenderAndCompleteUntilStepReturnObject = {
     ...helpers,
+    areas,
     onRequestNavigateToSession,
     onRequestCloseSelfNoPlatform,
   };
-  const {getByA11yLabel} = helpers;
+  const {getByA11yLabel, getByTestId} = helpers;
 
   if (stopStep > SessionSetupStep.Area) {
     const selectedFocusArea = areas[randomIntFromInterval(0, areas.length - 1)];
@@ -52,7 +57,7 @@ export function renderAndCompleteUntilStep(
     returnObject = {...returnObject, selectedFocusArea};
 
     let nextButton = getByA11yLabel(nextButtonA11yLabel);
-    fireEvent.press(nextButton);
+    act(() => fireEvent.press(nextButton));
 
     if (stopStep > SessionSetupStep.Group) {
       const selectedExerciseGroup =
@@ -66,25 +71,28 @@ export function renderAndCompleteUntilStep(
       returnObject = {...returnObject, selectedExerciseGroup};
 
       nextButton = getByA11yLabel(nextButtonA11yLabel);
-      fireEvent.press(nextButton);
+      act(() => fireEvent.press(nextButton));
 
       if (stopStep > SessionSetupStep.Time) {
-        // TODO: with the new picker, setting these values like this no longer works
-        const minuteInput = getByA11yLabel(minutePickerA11yLabel);
+        const timePicker = getByTestId(timePickerTestId);
+
+        const minuteInput = within(timePicker).getByTestId(minutePickerTestId);
+
         const numOfMinutes =
           minutePickerValues[
             randomIntFromInterval(0, minutePickerValues.length)
           ];
-        const selectedMinuteInput = within(minuteInput).getByText(
-          numOfMinutes.toString(),
+        const selectedMinuteInput = within(minuteInput).getByTestId(
+          minuteItemTestId(numOfMinutes),
         );
         act(() => fireEvent.press(selectedMinuteInput));
 
-        const hourInput = getByA11yLabel(hourPickerA11yLabel);
+        const hourInput = within(timePicker).getByTestId(hourPickerTestId);
+
         const numOfHours =
           hourPickerValues[randomIntFromInterval(0, hourPickerValues.length)];
-        const selectedHourInput = within(hourInput).getByText(
-          numOfHours.toString(),
+        const selectedHourInput = within(hourInput).getByTestId(
+          hourItemTestId(numOfHours),
         );
         act(() => fireEvent.press(selectedHourInput));
 
