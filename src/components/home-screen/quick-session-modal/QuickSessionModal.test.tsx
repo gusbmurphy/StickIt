@@ -8,7 +8,7 @@ import {
   exerciseGroupSkipA11yLabel,
 } from '.';
 import colors from '../../../styles/colors';
-import {areaButtonA11yLabel} from './AreaButton';
+import {areaButtonA11yLabel} from './AreaButtonCollection';
 import {exerciseGroupA11yLabel} from './ExerciseGroupButton';
 import {
   stepIndicatorA11yLabel,
