@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {FocusArea} from '../../../types/focus-area';
 import StepIndicator from '../../util/StepIndicator';
-import {AreaButton} from './AreaButton';
 import {ExerciseGroupButton} from './ExerciseGroupButton';
 import {ExerciseGroup} from '../../../types';
 import {GeneratedSessionSummaryView} from './GeneratedSessionSummaryView';
@@ -17,6 +16,7 @@ import {createSession} from './create-session';
 import TimePicker from '../../util/TimePicker';
 import Text from '../../../styles/components/StyledText';
 import {buttonStyles, colors, fontSizes, shadows} from '../../../styles';
+import {AreaButtonCollection} from './AreaButtonCollection';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -76,19 +76,6 @@ const QuickSessionModal = (
     }
   }, [totalMinutes, exerciseGroups, selectedExerciseGroup]);
 
-  const areaButtons = props.areas.map((area, i) => (
-    <AreaButton
-      name={area.name}
-      key={i}
-      selected={selectedArea?.id === area.id}
-      handlePress={() =>
-        selectedArea?.id !== area.id
-          ? setSelectedArea(area)
-          : setSelectedArea(null)
-      }
-    />
-  ));
-
   const exerciseGroupButtons = exerciseGroups
     ? exerciseGroups.map((group, i) => (
         <ExerciseGroupButton
@@ -117,7 +104,13 @@ const QuickSessionModal = (
     let content;
     switch (currentStep) {
       case SessionSetupStep.Area:
-        content = <View style={styles.areasView}>{areaButtons}</View>;
+        content = (
+          <AreaButtonCollection
+            areas={props.areas}
+            selectedArea={selectedArea}
+            setSelectedArea={setSelectedArea}
+          />
+        );
         break;
       case SessionSetupStep.Group:
         content = (
@@ -303,8 +296,9 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.xLarge,
   },
   promptText: {
-    fontSize: 20,
+    fontSize: fontSizes.medium,
     textAlign: 'center',
+    paddingHorizontal: 65,
     marginHorizontal: 12,
     marginBottom: 18,
   },
@@ -312,12 +306,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-  },
-  areasView: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   exerciseGroupsView: {},
   nextButton: {
