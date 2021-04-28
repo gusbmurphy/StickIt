@@ -1,5 +1,4 @@
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
-import {areaButtonA11yLabel} from './AreaButton';
 import React from 'react';
 import {FocusArea} from '../../../types';
 import {buttonStyles, colors, fontSizes} from '../../../styles';
