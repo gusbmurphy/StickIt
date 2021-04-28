@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, StyleProp, ViewStyle} from 'react-native';
 import {PickerIOS} from '@react-native-picker/picker';
 
 export const hourPickerValues = [...Array(5).keys()];
@@ -31,14 +31,16 @@ const TimePicker = ({
   setMinutes,
   hours,
   setHours,
+  style,
 }: {
   minutes: number;
   setMinutes: React.Dispatch<React.SetStateAction<number>>;
   hours: number;
   setHours: React.Dispatch<React.SetStateAction<number>>;
+  style: StyleProp<ViewStyle>;
 }) => {
   return (
-    <View style={styles.mainContainer} testID={timePickerTestId}>
+    <View style={[style, styles.mainContainer]} testID={timePickerTestId}>
       <PickerIOS
         accessibilityLabel={hourPickerA11yLabel}
         testID={hourPickerTestId}
@@ -63,7 +65,6 @@ const TimePicker = ({
 
 const styles = StyleSheet.create({
   mainContainer: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },

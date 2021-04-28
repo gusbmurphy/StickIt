@@ -96,6 +96,7 @@ const QuickSessionModal = (
       minutes={minutes}
       setMinutes={setMinutes}
       hours={hours}
+      style={styles.timePicker}
       setHours={setHours}
     />
   );
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   promptText: {
     fontSize: fontSizes.medium,
     textAlign: 'center',
-    paddingHorizontal: 65,
+    paddingHorizontal: 25,
     marginHorizontal: 12,
     marginBottom: 18,
   },
@@ -319,25 +320,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  timePicker: {
+    alignSelf: 'center',
+  },
   nextButtonText: {
     ...buttonStyles.text,
     fontSize: fontSizes.xLarge,
-  },
-  timeInput: {
-    fontSize: 18,
-  },
-  timeInputsView: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  individualTimeInputView: {
-    marginVertical: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  timeInputText: {
-    marginLeft: 10,
-    fontSize: 18,
   },
   footer: {
     justifyContent: 'flex-end',
