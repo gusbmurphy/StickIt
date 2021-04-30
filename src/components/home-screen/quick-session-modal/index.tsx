@@ -17,6 +17,7 @@ import TimePicker from '../../util/TimePicker';
 import Text from '../../../styles/components/StyledText';
 import {buttonStyles, colors, fontSizes, shadows} from '../../../styles';
 import {AreaButtonCollection} from './AreaButtonCollection';
+import {LargeButton} from '../../../styles/components/LargeButton';
 
 export enum SessionSetupStep {
   Area = 1,
@@ -138,17 +139,13 @@ const QuickSessionModal = (
     );
   };
 
-  const NextButton = () => {
-    return (
-      <TouchableOpacity
-        accessibilityLabel={nextButtonA11yLabel}
-        onPress={() => handleNextButtonPress()}>
-        <View style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>Next</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  const NextButton = () => (
+    <LargeButton
+      label={'Next'}
+      accessibilityLabel={nextButtonA11yLabel}
+      onPress={() => handleNextButtonPress()}
+    />
+  );
 
   function handleNextButtonPress() {
     switch (currentStep) {
@@ -166,20 +163,13 @@ const QuickSessionModal = (
 
   const StartButton = () => {
     return (
-      <TouchableOpacity
+      <LargeButton
+        label={'Start'}
+        buttonStyle={[styles.startButton, shadows.light]}
+        labelStyle={[styles.startButtonText, shadows.medium]}
         accessibilityLabel={startButtonA11yLabel}
-        onPress={() => handleStartButtonPress()}>
-        <View style={[styles.nextButton, styles.startButton, shadows.light]}>
-          <Text
-            style={[
-              styles.nextButtonText,
-              styles.startButtonText,
-              shadows.medium,
-            ]}>
-            Start
-          </Text>
-        </View>
-      </TouchableOpacity>
+        onPress={() => handleStartButtonPress()}
+      />
     );
   };
 
@@ -308,11 +298,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-  exerciseGroupsView: {},
-  nextButton: {
-    ...buttonStyles.default,
-    paddingVertical: 18,
-  },
   startButton: {
     backgroundColor: colors.primaryAction,
   },
@@ -322,10 +307,6 @@ const styles = StyleSheet.create({
   },
   timePicker: {
     alignSelf: 'center',
-  },
-  nextButtonText: {
-    ...buttonStyles.text,
-    fontSize: fontSizes.xLarge,
   },
   footer: {
     justifyContent: 'flex-end',
